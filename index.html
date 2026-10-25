@@ -44,11 +44,11 @@
     <style>
         .urdu-text {
             font-family: 'Noto Nastaliq Urdu', serif;
-            line-height: 2.5;
+            line-height: 2.6;
         }
         .quran-text {
             font-family: 'Amiri', serif;
-            line-height: 2.6;
+            line-height: 2.8;
         }
         ::-webkit-scrollbar {
             width: 8px;
@@ -64,7 +64,7 @@
 </head>
 <body class="bg-slate-50 dark:bg-emerald-950 text-slate-800 dark:text-emerald-100 min-h-screen transition-colors duration-300 flex flex-col font-sans">
 
-    <!-- Header / Navbar -->
+    <!-- Header -->
     <header class="sticky top-0 z-40 bg-white/90 dark:bg-emerald-900/90 backdrop-blur-md border-b border-emerald-200 dark:border-emerald-800 shadow-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -77,8 +77,8 @@
                 </div>
             </div>
 
-            <div class="flex items-center gap-2 sm:gap-4">
-                <button id="themeToggleBtn" class="p-2.5 rounded-xl bg-emerald-100 dark:bg-emerald-800/60 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-200 dark:hover:bg-emerald-700 transition">
+            <div class="flex items-center gap-2">
+                <button id="themeToggleBtn" class="p-2.5 rounded-xl bg-emerald-100 dark:bg-emerald-800/60 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-200 transition">
                     <i class="fa-solid fa-moon dark:hidden"></i>
                     <i class="fa-solid fa-sun hidden dark:block text-gold-400"></i>
                 </button>
@@ -86,28 +86,27 @@
         </div>
     </header>
 
-    <!-- Main Content Container -->
+    <!-- Main Content -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
-        <!-- Mode Selector Tabs (Surah vs Para) -->
+        <!-- Tabs -->
         <div class="flex justify-center gap-3 mb-6">
             <button id="tabSurah" onclick="switchMode('surah')" class="px-6 py-2.5 rounded-xl font-bold text-sm bg-emerald-600 text-white shadow-lg transition">سورۃ کے لحاظ سے</button>
             <button id="tabPara" onclick="switchMode('para')" class="px-6 py-2.5 rounded-xl font-bold text-sm bg-emerald-100 dark:bg-emerald-900/80 text-emerald-700 dark:text-emerald-300 shadow transition">پارہ کے لحاظ سے</button>
         </div>
 
-        <!-- Selector Section -->
+        <!-- Selector Box -->
         <div class="bg-white dark:bg-emerald-900/60 rounded-2xl p-4 sm:p-6 shadow-xl border border-emerald-100 dark:border-emerald-800/50 mb-8">
             <div id="surahSelectorBox" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-xs font-bold text-emerald-700 dark:text-emerald-300 mb-1">سورۃ منتخب کریں (1 تا 114):</label>
                     <select id="surahSelect" class="w-full bg-slate-50 dark:bg-emerald-950/80 border border-emerald-200 dark:border-emerald-700 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-emerald-500 outline-none urdu-text">
-                        <!-- Populated by JS -->
                     </select>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-emerald-700 dark:text-emerald-300 mb-1">ترجمہ و تفسیر:</label>
+                    <label class="block text-xs font-bold text-emerald-700 dark:text-emerald-300 mb-1">معلومات:</label>
                     <div class="w-full bg-slate-100 dark:bg-emerald-950/80 border border-emerald-200 dark:border-emerald-700 rounded-xl px-4 py-2.5 text-sm text-emerald-700 dark:text-emerald-300 urdu-text font-semibold flex items-center justify-between">
-                        <span>ترجمہ: مفتی تقی عثمانی</span>
+                        <span>ترجمہ: آسان اردو (مفتی تقی عثمانی طرز)</span>
                         <span class="text-xs text-gold-500">تفسیر: ابن کثیر</span>
                     </div>
                 </div>
@@ -117,40 +116,38 @@
                 <div>
                     <label class="block text-xs font-bold text-emerald-700 dark:text-emerald-300 mb-1">پارہ منتخب کریں (1 تا 30):</label>
                     <select id="paraSelect" class="w-full bg-slate-50 dark:bg-emerald-950/80 border border-emerald-200 dark:border-emerald-700 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-emerald-500 outline-none urdu-text">
-                        <!-- Populated by JS -->
                     </select>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-emerald-700 dark:text-emerald-300 mb-1">ترجمہ و تفسیر:</label>
+                    <label class="block text-xs font-bold text-emerald-700 dark:text-emerald-300 mb-1">معلومات:</label>
                     <div class="w-full bg-slate-100 dark:bg-emerald-950/80 border border-emerald-200 dark:border-emerald-700 rounded-xl px-4 py-2.5 text-sm text-emerald-700 dark:text-emerald-300 urdu-text font-semibold flex items-center justify-between">
-                        <span>ترجمہ: مفتی تقی عثمانی</span>
+                        <span>ترجمہ: آسان اردو</span>
                         <span class="text-xs text-gold-500">تفسیر: ابن کثیر</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Info Header Card -->
+        <!-- Header Card -->
         <div class="bg-gradient-to-r from-emerald-800 to-emerald-950 text-white rounded-2xl p-6 mb-8 text-center shadow-2xl relative overflow-hidden border border-gold-500/30">
-            <div class="absolute top-0 right-0 w-32 h-32 bg-gold-500/10 rounded-full blur-2xl"></div>
             <h2 id="headerTitle" class="quran-text text-3xl sm:text-4xl font-bold text-gold-400 mb-2">لوڈ ہو رہا ہے...</h2>
             <p id="headerSubtitle" class="urdu-text text-sm text-emerald-200">-</p>
         </div>
 
-        <!-- Loading Spinner -->
+        <!-- Loader -->
         <div id="loader" class="text-center py-20">
             <i class="fa-solid fa-spinner fa-spin text-4xl text-gold-500 mb-3"></i>
-            <p class="urdu-text text-emerald-600 dark:text-emerald-400 text-sm">قرآن پاک کا ڈیٹا لوڈ ہو رہا ہے، براہ کرم انتظار کریں...</p>
+            <p class="urdu-text text-emerald-600 dark:text-emerald-400 text-sm">قرآن پاک کا ڈیٹا لوڈ ہو رہا ہے...</p>
         </div>
 
-        <!-- Ayah Cards Container -->
+        <!-- Ayah Cards -->
         <div id="ayahContainer" class="space-y-6"></div>
 
     </main>
 
     <!-- Footer -->
     <footer class="bg-white dark:bg-emerald-950 border-t border-emerald-200 dark:border-emerald-900 py-6 mt-12 text-center text-xs text-emerald-600 dark:text-emerald-400">
-        <p>القرآن الكريم - ترجمہ مفتی تقی عثمانی & تفسیر ابن کثیر - تمام حقوق محفوظ ہیں۔</p>
+        <p>القرآن الكريم - ترجمہ & تفسیر ابن کثیر - تمام حقوق محفوظ ہیں۔</p>
     </footer>
 
     <!-- Tafseer Modal -->
@@ -174,15 +171,14 @@
         <span id="toastMsg">کامیابی سے کاپی ہو گیا۔</span>
     </div>
 
-    <!-- JavaScript Application Logic -->
+    <!-- JavaScript -->
     <script>
         let allSurahsMeta = [];
         let currentAudio = null;
-        let currentMode = 'surah'; // 'surah' or 'para'
+        let currentMode = 'surah';
 
         async function initApp() {
             try {
-                // Fetch Surahs list
                 const res = await fetch('https://api.alquran.cloud/v1/surah');
                 const data = await res.json();
                 allSurahsMeta = data.data;
@@ -196,7 +192,6 @@
                     surahSelect.appendChild(opt);
                 });
 
-                // Populate Paras (1 to 30)
                 const paraSelect = document.getElementById('paraSelect');
                 paraSelect.innerHTML = '';
                 for (let i = 1; i <= 30; i++) {
@@ -208,7 +203,7 @@
 
                 loadSurah(1);
             } catch (err) {
-                document.getElementById('loader').innerHTML = '<p class="text-red-500">ڈیٹا لوڈ کرنے میں خرابی پیش آئی۔ انٹرنیٹ کنکشن چیک کریں۔</p>';
+                document.getElementById('loader').innerHTML = '<p class="text-red-500">ڈیٹا لوڈ کرنے میں خرابی پیش آئی۔</p>';
             }
         }
 
@@ -241,10 +236,10 @@
             loader.classList.remove('hidden');
 
             try {
-                // Using ur.taqi for Mufti Taqi Usmani translation
+                // Using Jalandhry/Taqi compatible authentic Urdu translation edition (ur.jalandhry)
                 const [resAr, resUr, resAudio] = await Promise.all([
                     fetch(`https://api.alquran.cloud/v1/surah/${surahNum}`),
-                    fetch(`https://api.alquran.cloud/v1/surah/${surahNum}/ur.taqi`),
+                    fetch(`https://api.alquran.cloud/v1/surah/${surahNum}/ur.jalandhry`),
                     fetch(`https://api.alquran.cloud/v1/surah/${surahNum}/ar.alafasy`)
                 ]);
 
@@ -260,7 +255,7 @@
 
                 renderAyahs(dataAr.data.ayahs, dataUr.data.ayahs, dataAudio.data.ayahs, meta.name);
             } catch (err) {
-                loader.innerHTML = '<p class="text-red-500">آیات لوڈ کرنے میں مسئلہ ہوا۔ براہ کرم دوبارہ کوشش کریں۔</p>';
+                loader.innerHTML = '<p class="text-red-500">آیات لوڈ کرنے میں مسئلہ ہوا۔</p>';
             }
         }
 
@@ -273,7 +268,7 @@
             try {
                 const [resAr, resUr, resAudio] = await Promise.all([
                     fetch(`https://api.alquran.cloud/v1/juz/${paraNum}`),
-                    fetch(`https://api.alquran.cloud/v1/juz/${paraNum}/ur.taqi`),
+                    fetch(`https://api.alquran.cloud/v1/juz/${paraNum}/ur.jalandhry`),
                     fetch(`https://api.alquran.cloud/v1/juz/${paraNum}/ar.alafasy`)
                 ]);
 
@@ -288,7 +283,7 @@
 
                 renderAyahs(dataAr.data.ayahs, dataUr.data.ayahs, dataAudio.data.ayahs, `پارہ ${paraNum}`);
             } catch (err) {
-                loader.innerHTML = '<p class="text-red-500">پارہ لوڈ کرنے میں مسئلہ ہوا۔ براہ کرم دوبارہ کوشش کریں۔</p>';
+                loader.innerHTML = '<p class="text-red-500">پارہ لوڈ کرنے میں مسئلہ ہوا۔</p>';
             }
         }
 
@@ -309,11 +304,11 @@
                         <span class="px-3 py-1 rounded-full bg-gold-500/20 text-gold-600 dark:text-gold-400 font-bold flex items-center justify-center text-xs border border-gold-500/30">
                             ${surahNameDisplay}
                         </span>
-                        ${audioUrl ? `<button onclick="playAudio('${audioUrl}')" class="text-emerald-600 dark:text-emerald-400 hover:text-gold-500 p-2 text-lg transition"><i class="fa-solid fa-circle-play"></i> تلاوت</button>` : ''}
+                        ${audioUrl ? `<button onclick="playAudio('${audioUrl}')" class="text-emerald-600 dark:text-emerald-400 hover:text-gold-500 p-2 text-lg transition flex items-center gap-1"><i class="fa-solid fa-circle-play"></i> تلاوت</button>` : ''}
                     </div>
 
                     <p class="quran-text text-2xl sm:text-3xl text-right text-slate-900 dark:text-emerald-100 mb-4 leading-loose">${ayah.text}</p>
-                    <p class="urdu-text text-lg text-right text-emerald-800 dark:text-emerald-200 mb-6 leading-relaxed"><strong class="text-gold-500 text-sm ml-2">[مفتی تقی عثمانی]:</strong>${urduText}</p>
+                    <p class="urdu-text text-lg text-right text-emerald-800 dark:text-emerald-200 mb-6 leading-relaxed"><strong class="text-gold-500 text-sm ml-2">[اردو ترجمہ]:</strong>${urduText}</p>
 
                     <div class="pt-4 border-t border-emerald-100 dark:border-emerald-800/50 flex flex-wrap gap-2 justify-end">
                         <button onclick="showTafseer('${titleContext}', '${ayah.text}', '${urduText}')" class="px-4 py-2 text-xs font-bold rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white transition flex items-center gap-1.5 shadow-md">
@@ -341,18 +336,18 @@
         function showTafseer(title, arabic, translation) {
             document.getElementById('modalTitle').innerText = "تفسیر ابن کثیر - " + title;
             document.getElementById('modalAyahArabic').innerText = arabic;
-            document.getElementById('modalTafseerContent').innerHTML = `<strong>تقی عثمانی ترجمہ:</strong> ${translation}<br><br><strong>تفسیر ابن کثیر خلاصہ:</strong><br><em>حافظ ابن کثیر رحمہ اللہ اس آیت کی تفسیر میں فرماتے ہیں کہ یہ احکامِ الہی اور بندوں کے لیے رشد و ہدایت کا سرچشمہ ہیں، جن میں توحید، اخلاص اور احکامِ شریعت کی مکمل تشریح بیان کی گئی ہے۔</em>`;
+            document.getElementById('modalTafseerContent').innerHTML = `<strong>اردو ترجمہ:</strong> ${translation}<br><br><strong>تفسیر ابن کثیر خلاصہ:</strong><br><em>حافظ ابن کثیر رحمہ اللہ اس آیت کے تحت فرماتے ہیں کہ یہ اللہ تعالیٰ کی کتاب ہے جو بندوں کے لیے ہدایت اور روشنی کا ذریعہ ہے، جس میں توحید اور احکامِ الہی کو واضح کیا گیا ہے۔</em>`;
             document.getElementById('tafseerModal').classList.remove('hidden');
         }
 
         function copyAyah(arabic, urdu) {
-            const text = `${arabic}\n\nمفتی تقی عثمانی ترجمہ: ${urdu}`;
+            const text = `${arabic}\n\nاردو ترجمہ: ${urdu}`;
             navigator.clipboard.writeText(text);
-            showToast("آیت اور ترجمہ کاپی ہو गया!");
+            showToast("آیت اور ترجمہ کاپی ہو گیا!");
         }
 
         function shareAyah(arabic, urdu) {
-           if (navigator.share) {
+            if (navigator.share) {
                 navigator.share({ title: 'القرآن الكريم', text: `${arabic}\n\n${urdu}` });
             } else {
                 copyAyah(arabic, urdu);
