@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>القرآن الكريم - Mufti Taqi Usmani Tarjuma & Tafseer</title>
+    <title>القرآن الكريم - Urdu Tarjuma & Tafseer</title>
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -44,7 +44,7 @@
     <style>
         .urdu-text {
             font-family: 'Noto Nastaliq Urdu', serif;
-            line-height: 2.4;
+            line-height: 2.5;
         }
         .quran-text {
             font-family: 'Amiri', serif;
@@ -73,7 +73,7 @@
                 </div>
                 <div>
                     <h1 class="text-xl sm:text-2xl font-bold bg-gradient-to-r from-emerald-700 via-emerald-600 to-gold-500 dark:from-emerald-300 dark:to-gold-400 bg-clip-text text-transparent">القرآن الكريم</h1>
-                    <p class="text-xs text-emerald-600 dark:text-emerald-400">تفسیر و ترجمہ (مفتی تقی عثمانی)</p>
+                    <p class="text-xs text-emerald-600 dark:text-emerald-400">آسان اردو ترجمہ و تفسیر پورٹل</p>
                 </div>
             </div>
 
@@ -100,10 +100,11 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-emerald-700 dark:text-emerald-300 mb-1">تفسیر کا انتخاب کریں:</label>
-                    <select id="tafseerSelect" class="w-full bg-slate-50 dark:bg-emerald-950/80 border border-emerald-200 dark:border-emerald-700 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-emerald-500 outline-none urdu-text">
-                        <option value="usmani">تفسیر عثمانی / خلاصۂ تفسیر</option>
-                        <option value="ibn-kathir">تفسیر ابن کثیر (خلاصہ)</option>
+                    <label class="block text-xs font-bold text-emerald-700 dark:text-emerald-300 mb-1">اردو مترجم کا انتخاب کریں:</label>
+                    <select id="translatorSelect" class="w-full bg-slate-50 dark:bg-emerald-950/80 border border-emerald-200 dark:border-emerald-700 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-emerald-500 outline-none urdu-text">
+                        <option value="ur.jalandhry">مولانا فتح محمد جالندھری (آسان اردو ترجمہ)</option>
+                        <option value="ur.ahmedali">مولانا احمد علی</option>
+                        <option value="ur.kanzuliman">احمد رضا خان (کنز الایمان)</option>
                     </select>
                 </div>
             </div>
@@ -129,7 +130,7 @@
 
     <!-- Footer -->
     <footer class="bg-white dark:bg-emerald-950 border-t border-emerald-200 dark:border-emerald-900 py-6 mt-12 text-center text-xs text-emerald-600 dark:text-emerald-400">
-        <p>القرآن الكريم و ترجمہ مفتی تقی عثمانی - تمام حقوق محفوظ ہیں۔</p>
+        <p>القرآن الكريم و آسان اردو ترجمہ - تمام حقوق محفوظ ہیں۔</p>
     </footer>
 
     <!-- Tafseer Modal -->
@@ -158,7 +159,6 @@
         let allSurahsMeta = [];
         let currentAudio = null;
 
-        // Fetch Surah list on load
         async function initQuran() {
             try {
                 const res = await fetch('https://api.alquran.cloud/v1/surah');
@@ -183,14 +183,15 @@
         async function loadSurah(surahNum) {
             const container = document.getElementById('ayahContainer');
             const loader = document.getElementById('loader');
+            const selectedTranslator = document.getElementById('translatorSelect').value || 'ur.jalandhry';
+
             container.innerHTML = '';
             loader.classList.remove('hidden');
 
             try {
-                // Fetch Arabic text and Mufti Taqi Usmani Urdu translation simultaneously
                 const [resAr, resUr, resAudio] = await Promise.all([
                     fetch(`https://api.alquran.cloud/v1/surah/${surahNum}`),
-                    fetch(`https://api.alquran.cloud/v1/surah/${surahNum}/ur.taqi`),
+                    fetch(`https://api.alquran.cloud/v1/surah/${surahNum}/${selectedTranslator}`),
                     fetch(`https://api.alquran.cloud/v1/surah/${surahNum}/ar.alafasy`)
                 ]);
 
@@ -209,7 +210,7 @@
                 const ayahsAudio = dataAudio.data.ayahs;
 
                 ayahsAr.forEach((ayah, index) => {
-                    const urduText = ayahsUr[index] ? ayahsUr[index].text : '';
+                    const urduText = ayahsUr[index] ? ayahsUr[index].text : 'ترجمہ دستیاب نہیں ہے۔';
                     const audioUrl = ayahsAudio[index] ? ayahsAudio[index].audio : '';
                     const ayahNum = ayah.numberInSurah;
 
@@ -225,7 +226,7 @@
                         </div>
 
                         <p class="quran-text text-2xl sm:text-3xl text-right text-slate-900 dark:text-emerald-100 mb-4 leading-loose">${ayah.text}</p>
-                        <p class="urdu-text text-lg text-right text-emerald-800 dark:text-emerald-200 mb-6 leading-relaxed"><strong class="text-gold-500 text-sm ml-2">[تقی عثمانی]:</strong>${urduText}</p>
+                        <p class="urdu-text text-lg text-right text-emerald-800 dark:text-emerald-200 mb-6 leading-relaxed"><strong class="text-gold-500 text-sm ml-2">[اردو ترجمہ]:</strong>${urduText}</p>
 
                         <div class="pt-4 border-t border-emerald-100 dark:border-emerald-800/50 flex flex-wrap gap-2 justify-end">
                             <button onclick="showTafseer('${meta.name}', '${ayah.text}', '${urduText}')" class="px-4 py-2 text-xs font-bold rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white transition flex items-center gap-1.5 shadow-md">
@@ -257,12 +258,12 @@
         function showTafseer(surahName, arabic, translation) {
             document.getElementById('modalTitle').innerText = "خلاصۂ تفسیر و تشریح - " + surahName;
             document.getElementById('modalAyahArabic').innerText = arabic;
-            document.getElementById('modalTafseerContent').innerHTML = `<strong>ترجمہ:</strong> ${translation}<br><br><em>(اس مبارک آیت میں بندे के लिए رب کی رحمت، ہدایت اور احکامات کا بیان ہے جو انسان کو صراط مستقیم پر گامزن کرتے ہیں۔)</em>`;
+            document.getElementById('modalTafseerContent').innerHTML = `<strong>ترجمہ:</strong> ${translation}<br><br><em>(اس مبارک آیت میں رب کریم کی وحدانیت، ہدایت اور احکامات کا بیان ہے جو انسان کی رہنمائی کرتے ہیں۔)</em>`;
             document.getElementById('tafseerModal').classList.remove('hidden');
         }
 
         function copyAyah(arabic, urdu) {
-            const text = `${arabic}\n\nتقی عثمانی ترجمہ: ${urdu}`;
+            const text = `${arabic}\n\nاردو ترجمہ: ${urdu}`;
             navigator.clipboard.writeText(text);
             showToast("آیت اور ترجمہ کاپی ہو گیا!");
         }
@@ -282,7 +283,6 @@
             setTimeout(() => toast.classList.add('opacity-0', 'pointer-events-none'), 3000);
         }
 
-        // Event Listeners
         document.getElementById('closeModalBtn').addEventListener('click', () => {
             document.getElementById('tafseerModal').classList.add('hidden');
         });
@@ -295,7 +295,11 @@
             loadSurah(e.target.value);
         });
 
-        // Run on load
+        document.getElementById('translatorSelect').addEventListener('change', () => {
+            const surahVal = document.getElementById('surahSelect').value || 1;
+            loadSurah(surahVal);
+        });
+
         initQuran();
     </script>
 </body>
