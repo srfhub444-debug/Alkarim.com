@@ -25,15 +25,15 @@
                         }
                     },
                     fontFamily: {
-                        quran: ['"Amiri Quran"', '"Amiri"', 'serif'],
-                        urdu: ['"Noto Nastaliq Urdu"', 'serif'],
+                        quran: ['"Amiri"', '"Amiri Quran"', 'serif'],
+                        urdu: ['"Noto Nastaliq Urdu"', '"Jameel Noori Nastaleeq"', 'serif'],
                     }
                 }
             }
         }
     </script>
 
-    <!-- Google Fonts (Amiri Quran & Noto Nastaliq Urdu) -->
+    <!-- Google Fonts Imports -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Nastaliq+Urdu:wght@400..700&display=swap" rel="stylesheet">
@@ -42,23 +42,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        .urdu-text {
-            font-family: 'Noto Nastaliq Urdu', serif;
-            line-height: 2.6;
+        /* Force fonts across elements */
+        .quran-heading, .quran-text {
+            font-family: 'Amiri Quran', 'Amiri', serif !important;
+            line-height: 2.8;
         }
-        .quran-text {
-            font-family: 'Amiri Quran', 'Amiri', serif;
-            line-height: 3.0;
+        .urdu-text, body, button, select, label {
+            font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif !important;
+            line-height: 2.4;
         }
-        /* Line spacing styles for 15-line and 13-line views */
+
         .mushaf-15 {
-            line-height: 3.0;
-            font-size: 1.85rem;
+            line-height: 3.0 !important;
+            font-size: 1.85rem !important;
         }
         .mushaf-13 {
-            line-height: 3.4;
-            font-size: 2.1rem;
+            line-height: 3.4 !important;
+            font-size: 2.1rem !important;
         }
+
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -71,7 +73,7 @@
         }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-emerald-950 text-slate-800 dark:text-emerald-100 min-h-screen transition-colors duration-300 flex flex-col font-sans">
+<body class="bg-slate-50 dark:bg-emerald-950 text-slate-800 dark:text-emerald-100 min-h-screen transition-colors duration-300 flex flex-col urdu-text">
 
     <!-- Header -->
     <header class="sticky top-0 z-40 bg-white/90 dark:bg-emerald-900/90 backdrop-blur-md border-b border-emerald-200 dark:border-emerald-800 shadow-md">
@@ -81,8 +83,8 @@
                     <i class="fa-solid font-bold text-xl fa-book-quran"></i>
                 </div>
                 <div>
-                    <h1 class="text-xl sm:text-2xl font-bold bg-gradient-to-r from-emerald-700 via-emerald-600 to-gold-500 dark:from-emerald-300 dark:to-gold-400 bg-clip-text text-transparent">القرآن الكريم</h1>
-                    <p class="text-xs text-emerald-600 dark:text-emerald-400">ترجمہ مفتی تقی عثمانی & تفسیر ابن کثیر</p>
+                    <h1 class="quran-heading text-2xl sm:text-3xl font-bold bg-gradient-to-r from-emerald-700 via-emerald-600 to-gold-500 dark:from-emerald-300 dark:to-gold-400 bg-clip-text text-transparent">القرآن الكريم</h1>
+                    <p class="text-xs text-emerald-600 dark:text-emerald-400 urdu-text">ترجمہ مفتی تقی عثمانی & تفسیر ابن کثیر</p>
                 </div>
             </div>
 
@@ -98,16 +100,15 @@
     <!-- Main Content -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
-        <!-- Navigation Tabs (Surah, Para, Safha) -->
+        <!-- Navigation Tabs -->
         <div class="flex flex-wrap justify-center gap-2 mb-6">
-            <button id="tabSurah" onclick="switchMode('surah')" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-emerald-600 text-white shadow-lg transition">سورۃ وار</button>
-            <button id="tabPara" onclick="switchMode('para')" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-emerald-100 dark:bg-emerald-900/80 text-emerald-700 dark:text-emerald-300 shadow transition">پارہ وار</button>
-            <button id="tabSafha" onclick="switchMode('safha')" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-emerald-100 dark:bg-emerald-900/80 text-emerald-700 dark:text-emerald-300 shadow transition">صفحہ وار (مصحف)</button>
+            <button id="tabSurah" onclick="switchMode('surah')" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-emerald-600 text-white shadow-lg transition urdu-text">سورۃ وار</button>
+            <button id="tabPara" onclick="switchMode('para')" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-emerald-100 dark:bg-emerald-900/80 text-emerald-700 dark:text-emerald-300 shadow transition urdu-text">پارہ وار</button>
+            <button id="tabSafha" onclick="switchMode('safha')" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-emerald-100 dark:bg-emerald-900/80 text-emerald-700 dark:text-emerald-300 shadow transition urdu-text">صفحہ وار (مصحف)</button>
         </div>
 
         <!-- Selector Box -->
         <div class="bg-white dark:bg-emerald-900/60 rounded-2xl p-4 sm:p-6 shadow-xl border border-emerald-100 dark:border-emerald-800/50 mb-8">
-            <!-- Surah Selector -->
             <div id="surahSelectorBox" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-xs font-bold text-emerald-700 dark:text-emerald-300 mb-1">سورۃ منتخب کریں (1 تا 114):</label>
@@ -122,7 +123,6 @@
                 </div>
             </div>
 
-            <!-- Para Selector -->
             <div id="paraSelectorBox" class="grid grid-cols-1 md:grid-cols-2 gap-4 hidden">
                 <div>
                     <label class="block text-xs font-bold text-emerald-700 dark:text-emerald-300 mb-1">پارہ منتخب کریں (1 تا 30):</label>
@@ -137,7 +137,6 @@
                 </div>
             </div>
 
-            <!-- Safha (Page) Selector & Line Style -->
             <div id="safhaSelectorBox" class="grid grid-cols-1 md:grid-cols-3 gap-4 hidden">
                 <div>
                     <label class="block text-xs font-bold text-emerald-700 dark:text-emerald-300 mb-1">صفحہ منتخب کریں (1 تا 604):</label>
@@ -151,15 +150,15 @@
                     </select>
                 </div>
                 <div class="flex items-end">
-                    <button onclick="changePage(-1)" class="w-1/2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl py-2.5 text-xs font-bold ml-1 transition">پچھلا صفحہ</button>
-                    <button onclick="changePage(1)" class="w-1/2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl py-2.5 text-xs font-bold mr-1 transition">اگلا صفحہ</button>
+                    <button onclick="changePage(-1)" class="w-1/2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl py-2.5 text-xs font-bold ml-1 transition urdu-text">پچھلا صفحہ</button>
+                    <button onclick="changePage(1)" class="w-1/2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl py-2.5 text-xs font-bold mr-1 transition urdu-text">اگلا صفحہ</button>
                 </div>
             </div>
         </div>
 
         <!-- Header Card -->
         <div class="bg-gradient-to-r from-emerald-800 to-emerald-950 text-white rounded-2xl p-6 mb-8 text-center shadow-2xl relative overflow-hidden border border-gold-500/30">
-            <h2 id="headerTitle" class="quran-text text-3xl sm:text-4xl font-bold text-gold-400 mb-2">لوڈ ہو رہا ہے...</h2>
+            <h2 id="headerTitle" class="quran-heading text-4xl sm:text-5xl font-bold text-gold-400 mb-2">لوڈ ہو رہا ہے...</h2>
             <p id="headerSubtitle" class="urdu-text text-sm text-emerald-200">-</p>
         </div>
 
@@ -175,7 +174,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white dark:bg-emerald-950 border-t border-emerald-200 dark:border-emerald-900 py-6 mt-12 text-center text-xs text-emerald-600 dark:text-emerald-400">
+    <footer class="bg-white dark:bg-emerald-950 border-t border-emerald-200 dark:border-emerald-900 py-6 mt-12 text-center text-xs text-emerald-600 dark:text-emerald-400 urdu-text">
         <p>القرآن الكريم - مصحف صفحہ وار، ترجمہ & تفسیر ابن کثیر - تمام حقوق محفوظ ہیں۔</p>
     </footer>
 
@@ -183,20 +182,20 @@
     <div id="tafseerModal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white dark:bg-emerald-900 rounded-2xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl border border-emerald-300 dark:border-emerald-700 overflow-hidden">
             <div class="p-4 border-b border-emerald-100 dark:border-emerald-800 flex justify-between items-center bg-emerald-50 dark:bg-emerald-950">
-                <h3 id="modalTitle" class="font-bold text-emerald-800 dark:text-emerald-200 text-lg">تفسیر ابن کثیر</h3>
+                <h3 id="modalTitle" class="font-bold text-emerald-800 dark:text-emerald-200 text-lg urdu-text">تفسیر ابن کثیر</h3>
                 <button id="closeModalBtn" class="text-slate-400 hover:text-slate-600 dark:hover:text-white p-1">
                     <i class="fa-solid fa-xmark text-xl"></i>
                 </button>
             </div>
             <div class="p-6 overflow-y-auto space-y-4 text-right">
-                <div id="modalAyahArabic" class="quran-text text-2xl text-emerald-700 dark:text-emerald-300 p-3 bg-emerald-50/50 dark:bg-emerald-950/50 rounded-xl text-center"></div>
+                <div id="modalAyahArabic" class="quran-heading text-2xl text-emerald-700 dark:text-emerald-300 p-3 bg-emerald-50/50 dark:bg-emerald-950/50 rounded-xl text-center"></div>
                 <div id="modalTafseerContent" class="urdu-text text-slate-700 dark:text-emerald-100 text-base leading-loose"></div>
             </div>
         </div>
     </div>
 
     <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-5 left-1/2 -translate-x-1/2 bg-emerald-800 text-gold-400 px-6 py-3 rounded-full text-sm font-semibold shadow-2xl transition-all duration-300 opacity-0 pointer-events-none z-50 border border-gold-500/40">
+    <div id="toast" class="fixed bottom-5 left-1/2 -translate-x-1/2 bg-emerald-800 text-gold-400 px-6 py-3 rounded-full text-sm font-semibold shadow-2xl transition-all duration-300 opacity-0 pointer-events-none z-50 border border-gold-500/40 urdu-text">
         <span id="toastMsg">کامیابی سے کاپی ہو گیا۔</span>
     </div>
 
@@ -255,9 +254,9 @@
             const paraBox = document.getElementById('paraSelectorBox');
             const safhaBox = document.getElementById('safhaSelectorBox');
 
-            tabSurah.className = "px-5 py-2.5 rounded-xl font-bold text-sm " + (mode === 'surah' ? "bg-emerald-600 text-white shadow-lg" : "bg-emerald-100 dark:bg-emerald-900/80 text-emerald-700 dark:text-emerald-300");
-            tabPara.className = "px-5 py-2.5 rounded-xl font-bold text-sm " + (mode === 'para' ? "bg-emerald-600 text-white shadow-lg" : "bg-emerald-100 dark:bg-emerald-900/80 text-emerald-700 dark:text-emerald-300");
-            tabSafha.className = "px-5 py-2.5 rounded-xl font-bold text-sm " + (mode === 'safha' ? "bg-emerald-600 text-white shadow-lg" : "bg-emerald-100 dark:bg-emerald-900/80 text-emerald-700 dark:text-emerald-300");
+            tabSurah.className = "px-5 py-2.5 rounded-xl font-bold text-sm urdu-text " + (mode === 'surah' ? "bg-emerald-600 text-white shadow-lg" : "bg-emerald-100 dark:bg-emerald-900/80 text-emerald-700 dark:text-emerald-300");
+            tabPara.className = "px-5 py-2.5 rounded-xl font-bold text-sm urdu-text " + (mode === 'para' ? "bg-emerald-600 text-white shadow-lg" : "bg-emerald-100 dark:bg-emerald-900/80 text-emerald-700 dark:text-emerald-300");
+            tabSafha.className = "px-5 py-2.5 rounded-xl font-bold text-sm urdu-text " + (mode === 'safha' ? "bg-emerald-600 text-white shadow-lg" : "bg-emerald-100 dark:bg-emerald-900/80 text-emerald-700 dark:text-emerald-300");
 
             surahBox.classList.toggle('hidden', mode !== 'surah');
             paraBox.classList.toggle('hidden', mode !== 'para');
@@ -367,7 +366,7 @@
             const pageCard = document.createElement('div');
             pageCard.className = "bg-white dark:bg-emerald-900/70 rounded-2xl p-6 sm:p-10 shadow-2xl border-2 border-gold-500/40 relative";
 
-            let pageContentHTML = `<div class="text-center pb-6 mb-6 border-b border-emerald-200 dark:border-emerald-800 text-gold-500 font-bold text-sm">صفحہ نمبر ${pageNum}</div>`;
+            let pageContentHTML = `<div class="text-center pb-6 mb-6 border-b border-emerald-200 dark:border-emerald-800 text-gold-500 font-bold text-sm urdu-text">صفحہ نمبر ${pageNum}</div>`;
             pageContentHTML += `<div class="space-y-6">`;
 
             ayahsAr.forEach((ayah, index) => {
@@ -378,11 +377,11 @@
 
                 pageContentHTML += `
                     <div class="p-4 rounded-xl bg-emerald-50/50 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-800/50">
-                        <div class="flex justify-between items-center mb-2 text-xs text-gold-600 dark:text-gold-400 font-semibold">
+                        <div class="flex justify-between items-center mb-2 text-xs text-gold-600 dark:text-gold-400 font-semibold urdu-text">
                             <span>${surahName} (آیت ${ayahNum})</span>
                             ${audioUrl ? `<button onclick="playAudio('${audioUrl}')" class="text-emerald-600 dark:text-emerald-400 hover:text-gold-500 transition"><i class="fa-solid fa-circle-play"></i> تلاوت</button>` : ''}
                         </div>
-                        <p class="quran-text ${textStyleClass} text-right text-slate-900 dark:text-emerald-100 mb-3">${ayah.text}</p>
+                        <p class="quran-heading ${textStyleClass} text-right text-slate-900 dark:text-emerald-100 mb-3">${ayah.text}</p>
                         <p class="urdu-text text-sm sm:text-base text-right text-emerald-800 dark:text-emerald-200 border-t border-emerald-200/40 dark:border-emerald-800/40 pt-2"><strong class="text-gold-500 ml-1">[ترجمہ]:</strong>${urduText}</p>
                     </div>
                 `;
@@ -407,23 +406,23 @@
                 
                 card.innerHTML = `
                     <div class="flex justify-between items-center mb-4">
-                        <span class="px-3 py-1 rounded-full bg-gold-500/20 text-gold-600 dark:text-gold-400 font-bold flex items-center justify-center text-xs border border-gold-500/30">
+                        <span class="px-3 py-1 rounded-full bg-gold-500/20 text-gold-600 dark:text-gold-400 font-bold flex items-center justify-center text-xs border border-gold-500/30 urdu-text">
                             ${surahNameDisplay}
                         </span>
-                        ${audioUrl ? `<button onclick="playAudio('${audioUrl}')" class="text-emerald-600 dark:text-emerald-400 hover:text-gold-500 p-2 text-lg transition flex items-center gap-1"><i class="fa-solid fa-circle-play"></i> تلاوت</button>` : ''}
+                        ${audioUrl ? `<button onclick="playAudio('${audioUrl}')" class="text-emerald-600 dark:text-emerald-400 hover:text-gold-500 p-2 text-lg transition flex items-center gap-1 urdu-text"><i class="fa-solid fa-circle-play"></i> تلاوت</button>` : ''}
                     </div>
 
-                    <p class="quran-text text-2xl sm:text-3xl text-right text-slate-900 dark:text-emerald-100 mb-4 leading-loose">${ayah.text}</p>
+                    <p class="quran-heading text-2xl sm:text-3xl text-right text-slate-900 dark:text-emerald-100 mb-4 leading-loose">${ayah.text}</p>
                     <p class="urdu-text text-lg text-right text-emerald-800 dark:text-emerald-200 mb-6 leading-relaxed"><strong class="text-gold-500 text-sm ml-2">[اردو ترجمہ]:</strong>${urduText}</p>
 
                     <div class="pt-4 border-t border-emerald-100 dark:border-emerald-800/50 flex flex-wrap gap-2 justify-end">
-                        <button onclick="showTafseer('${titleContext}', '${ayah.text}', '${urduText}')" class="px-4 py-2 text-xs font-bold rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white transition flex items-center gap-1.5 shadow-md">
+                        <button onclick="showTafseer('${titleContext}', '${ayah.text}', '${urduText}')" class="px-4 py-2 text-xs font-bold rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white transition flex items-center gap-1.5 shadow-md urdu-text">
                             <i class="fa-solid fa-book-open"></i> تفسیر ابن کثیر دیکھیں
                         </button>
-                        <button onclick="copyAyah('${ayah.text}', '${urduText}')" class="px-3 py-2 text-xs font-semibold rounded-xl bg-emerald-100 dark:bg-emerald-800/80 text-emerald-700 dark:text-emerald-200 hover:bg-emerald-200 transition flex items-center gap-1">
+                        <button onclick="copyAyah('${ayah.text}', '${urduText}')" class="px-3 py-2 text-xs font-semibold rounded-xl bg-emerald-100 dark:bg-emerald-800/80 text-emerald-700 dark:text-emerald-200 hover:bg-emerald-200 transition flex items-center gap-1 urdu-text">
                             <i class="fa-regular fa-copy"></i> کاپی
                         </button>
-                        <button onclick="shareAyah('${ayah.text}', '${urduText}')" class="px-3 py-2 text-xs font-semibold rounded-xl bg-emerald-100 dark:bg-emerald-800/80 text-emerald-700 dark:text-emerald-200 hover:bg-emerald-200 transition flex items-center gap-1">
+                        <button onclick="shareAyah('${ayah.text}', '${urduText}')" class="px-3 py-2 text-xs font-semibold rounded-xl bg-emerald-100 dark:bg-emerald-800/80 text-emerald-700 dark:text-emerald-200 hover:bg-emerald-200 transition flex items-center gap-1 urdu-text">
                             <i class="fa-solid fa-share-nodes"></i> شیئر
                         </button>
                     </div>
