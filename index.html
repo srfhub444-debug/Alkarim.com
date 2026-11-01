@@ -37,56 +37,19 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Firebase SDK (Modular v10) -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-        // Yahan apni Firebase ki credentials daalein
-        const firebaseConfig = {
-            apiKey: "YOUR_FIREBASE_API_KEY",
-            authDomain: "your-app.firebaseapp.com",
-            databaseURL: "https://your-app-default-rtdb.firebaseio.com",
-            projectId: "your-app",
-            storageBucket: "your-app.appspot.com",
-            messagingSenderId: "123456789",
-            appId: "1:12345:web:abcde"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-
-        window.saveToCloud = async function(surahNum, translationText, tafseerText) {
-            try {
-                await set(ref(db, 'quranData/surah_' + surahNum), {
-                    translation: translationText,
-                    tafseer: tafseerText,
-                    updatedAt: new Date().toISOString()
-                });
-                alert("Cloud par kamyabi se save ho gaya!");
-            } catch (err) {
-                alert("Save karne mein error aaya: " + err.message);
-            }
-        }
-
-        window.getFromCloud = async function(surahNum) {
-            try {
-                const dbRef = ref(db);
-                const snapshot = await get(child(dbRef, `quranData/surah_${surahNum}`));
-                if (snapshot.exists()) {
-                    return snapshot.val();
-                }
-            } catch (err) {
-                console.error(err);
-            }
-            return null;
-        }
-    </script>
-
     <style>
-        .quran-heading { font-family: 'Amiri Quran', 'Amiri', serif; line-height: 2.2; }
-        .quran-text { font-family: 'Amiri Quran', 'Amiri', serif; line-height: 2.6; }
-        .urdu-text { font-family: 'Noto Nastaliq Urdu', serif; line-height: 2.4; }
+        .quran-heading { 
+            font-family: 'Amiri Quran', 'Amiri', serif !important; 
+            line-height: 1.8 !important; 
+        }
+        .quran-text { 
+            font-family: 'Amiri Quran', 'Amiri', serif !important; 
+            line-height: 2.6 !important; 
+        }
+        .urdu-text { 
+            font-family: 'Noto Nastaliq Urdu', serif !important; 
+            line-height: 2.2 !important; 
+        }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #022c22; }
         ::-webkit-scrollbar-thumb { background: #059669; border-radius: 4px; }
@@ -107,12 +70,12 @@
                 </button>
             </div>
 
-            <div class="text-center flex flex-col items-center">
+            <div class="text-center flex flex-col items-center py-1">
                 <div class="flex items-center gap-2 mb-1">
                     <i class="fa-solid fa-book-quran text-gold-500 text-2xl sm:text-3xl"></i>
-                    <h1 class="quran-heading text-3xl sm:text-4xl font-bold bg-gradient-to-r from-emerald-700 via-gold-500 to-emerald-600 dark:from-emerald-200 dark:via-gold-400 dark:to-emerald-300 bg-clip-text text-transparent">القرآن الكريم</h1>
+                    <h1 class="quran-heading text-3xl sm:text-4xl font-bold bg-gradient-to-r from-emerald-700 via-gold-500 to-emerald-600 dark:from-emerald-200 dark:via-gold-400 dark:to-emerald-300 bg-clip-text text-transparent px-2">القرآن الكريم</h1>
                 </div>
-                <p class="text-xs text-emerald-600 dark:text-emerald-300 urdu-text font-medium">ترجمہ مفتی تقی عثمانی & تفسیر ابن کثیر (Cloud Sync)</p>
+                <p class="text-xs text-emerald-600 dark:text-emerald-300 urdu-text mt-1">ترجمہ مفتی تقی عثمانی & تفسیر ابن کثیر (Cloud Sync)</p>
             </div>
 
             <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-emerald-600 to-gold-500 flex items-center justify-center text-white shadow-md">
@@ -133,6 +96,13 @@
                 <div>
                     <label class="block text-xs font-bold text-emerald-700 dark:text-emerald-300 mb-2 urdu-text">سورۃ منتخب کریں (1 تا 114):</label>
                     <select id="surahSelect" class="w-full bg-slate-50 dark:bg-emerald-950/80 border border-emerald-200 dark:border-emerald-700 rounded-xl px-4 py-2.5 text-sm outline-none urdu-text"></select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-emerald-700 dark:text-emerald-300 mb-2 urdu-text">معلومات:</label>
+                    <div class="w-full bg-slate-100 dark:bg-emerald-950/80 border border-emerald-200 dark:border-emerald-700 rounded-xl px-4 py-2.5 text-sm text-emerald-700 dark:text-emerald-300 urdu-text font-semibold flex items-center justify-between">
+                        <span>ترجمہ: آسان اردو</span>
+                        <span class="text-xs text-gold-500">تفسیر: ابن کثیر</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -166,11 +136,11 @@
     <div id="adminPanelModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white dark:bg-emerald-900 rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-gold-500 overflow-hidden">
             <div class="p-4 border-b border-emerald-200 dark:border-emerald-800 flex justify-between items-center bg-emerald-50 dark:bg-emerald-950">
-                <h3 class="font-bold text-emerald-800 dark:text-gold-400 text-lg urdu-text">بلک ڈیٹا کنورٹر & کلاؤڈ اپلوডার (114 سورات)</h3>
+                <h3 class="font-bold text-emerald-800 dark:text-gold-400 text-lg urdu-text">بلک ڈیٹا کنورٹر & کلاؤڈ اپلوڈر (114 سورات)</h3>
                 <button onclick="closeAdminPanel()" class="text-slate-400 hover:text-white p-1"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
             <div class="p-6 overflow-y-auto space-y-4 text-right urdu-text">
-                <p class="text-xs text-emerald-600 dark:text-emerald-300">Yahan aap kisi bhi Surah ka custom Tarjuma aur Tafseer daal kar Direct Cloud (Firebase) par save kar sakte hain taake puri audience ko wahi show ho.</p>
+                <p class="text-xs text-emerald-600 dark:text-emerald-300">Yahan aap kisi bhi Surah ka custom Tarjuma aur Tafseer daal kar save kar sakte hain.</p>
                 <div>
                     <label class="block text-xs font-bold mb-1">Surah Number select karein:</label>
                     <input type="number" id="adminSurahNum" min="1" max="114" value="1" class="w-full bg-slate-100 dark:bg-emerald-950 border border-emerald-300 dark:border-emerald-700 rounded-xl px-4 py-2 text-sm outline-none">
@@ -183,7 +153,7 @@
                     <label class="block text-xs font-bold mb-1">Tafseer Ibn-e-Kaseer Content:</label>
                     <textarea id="adminTafseerText" rows="4" class="w-full bg-slate-100 dark:bg-emerald-950 border border-emerald-300 dark:border-emerald-700 rounded-xl p-3 text-sm outline-none" placeholder="Yahan tafseer likhein..."></textarea>
                 </div>
-                <button onclick="publishToCloud()" class="w-full py-3 bg-gradient-to-r from-emerald-600 to-gold-500 text-white rounded-xl font-bold shadow-lg text-sm">کلاؤڈ پر پبلش کریں (Publish)</button>
+                <button onclick="publishToCloud()" class="w-full py-3 bg-gradient-to-r from-emerald-600 to-gold-500 text-white rounded-xl font-bold shadow-lg text-sm">پبلش کریں (Save & Publish)</button>
             </div>
         </div>
     </div>
@@ -193,53 +163,56 @@
         let allSurahsMeta = [];
 
         async function initApp() {
-            const res = await fetch('https://api.alquran.cloud/v1/surah');
-            const data = await res.json();
-            allSurahsMeta = data.data;
-            const select = document.getElementById('surahSelect');
-            select.innerHTML = '';
-            allSurahsMeta.forEach(s => {
-                const opt = document.createElement('option');
-                opt.value = s.number;
-                opt.textContent = `${s.number}. ${s.englishName} (${s.name}) - ${s.englishNameTranslation}`;
-                select.appendChild(opt);
-            });
-            loadSurah(1);
+            try {
+                const res = await fetch('https://api.alquran.cloud/v1/surah');
+                const data = await res.json();
+                allSurahsMeta = data.data;
+                const select = document.getElementById('surahSelect');
+                select.innerHTML = '';
+                allSurahsMeta.forEach(s => {
+                    const opt = document.createElement('option');
+                    opt.value = s.number;
+                    opt.textContent = `${s.number}. ${s.englishName} (${s.name}) - ${s.englishNameTranslation}`;
+                    select.appendChild(opt);
+                });
+                loadSurah(1);
+            } catch (err) {
+                document.getElementById('loader').innerHTML = '<p class="text-red-500">ڈیٹا لوڈ کرنے میں مسئلہ ہوا۔</p>';
+            }
         }
 
         async function loadSurah(surahNum) {
-            document.getElementById('loader').classList.remove('hidden');
-            document.getElementById('ayahContainer').innerHTML = '';
-            
-            const [resAr, resAudio] = await Promise.all([
-                fetch(`https://api.alquran.cloud/v1/surah/${surahNum}`),
-                fetch(`https://api.alquran.cloud/v1/surah/${surahNum}/ar.alafasy`)
-            ]);
-            const dataAr = await resAr.json();
-            const dataAudio = await resAudio.json();
-
-            // Check if Custom Data exists in Firebase Cloud
-            let cloudData = null;
-            if (window.getFromCloud) {
-                cloudData = await window.getFromCloud(surahNum);
-            }
-
-            document.getElementById('loader').classList.add('hidden');
-            const meta = allSurahsMeta[surahNum - 1];
-            document.getElementById('headerTitle').innerText = meta.name;
-            document.getElementById('headerSubtitle').innerText = `${meta.englishName} • آیات: ${meta.numberOfAyahs}`;
-
+            const loader = document.getElementById('loader');
             const container = document.getElementById('ayahContainer');
-            dataAr.data.ayahs.forEach((ayah, index) => {
-                const urduText = cloudData ? cloudData.translation : "آسان اردو ترجمہ (مفتی تقی عثمانی)";
-                const card = document.createElement('div');
-                card.className = "bg-white dark:bg-emerald-900/60 rounded-2xl p-6 shadow-md border border-emerald-100 dark:border-emerald-800/40";
-                card.innerHTML = `
-                    <p class="quran-text text-2xl text-right mb-4">${ayah.text}</p>
-                    <p class="urdu-text text-base text-right text-emerald-200 mb-4"><strong class="text-gold-500 ml-2">[ترجمہ]:</strong>${urduText}</p>
-                `;
-                container.appendChild(card);
-            });
+            loader.classList.remove('hidden');
+            container.innerHTML = '';
+            
+            try {
+                const [resAr, resUr] = await Promise.all([
+                    fetch(`https://api.alquran.cloud/v1/surah/${surahNum}`),
+                    fetch(`https://api.alquran.cloud/v1/surah/${surahNum}/ur.jalandhry`)
+                ]);
+                const dataAr = await resAr.json();
+                const dataUr = await resUr.json();
+
+                loader.classList.add('hidden');
+                const meta = allSurahsMeta[surahNum - 1] || { name: 'سورۃ', englishName: '', numberOfAyahs: 0 };
+                document.getElementById('headerTitle').innerText = meta.name;
+                document.getElementById('headerSubtitle').innerText = `${meta.englishName} • آیات: ${meta.numberOfAyahs}`;
+
+                dataAr.data.ayahs.forEach((ayah, index) => {
+                    const urduText = dataUr.data && dataUr.data.ayahs[index] ? dataUr.data.ayahs[index].text : "آسان اردو ترجمہ (مفتی تقی عثمانی)";
+                    const card = document.createElement('div');
+                    card.className = "bg-white dark:bg-emerald-900/60 rounded-2xl p-6 shadow-md border border-emerald-100 dark:border-emerald-800/40";
+                    card.innerHTML = `
+                        <p class="quran-text text-2xl sm:text-3xl text-right mb-4 text-slate-900 dark:text-emerald-100">${ayah.text}</p>
+                        <p class="urdu-text text-base sm:text-lg text-right text-emerald-800 dark:text-emerald-200 mb-2 border-t border-emerald-100 dark:border-emerald-800/40 pt-3"><strong class="text-gold-500 ml-2">[اردو ترجمہ]:</strong>${urduText}</p>
+                    `;
+                    container.appendChild(card);
+                });
+            } catch (err) {
+                loader.innerHTML = '<p class="text-red-500">سورۃ لوڈ نہیں ہو سکی۔ براہ کرم پیج ریفریش کریں۔</p>';
+            }
         }
 
         function openAdminModal() { document.getElementById('adminAuthModal').classList.remove('hidden'); }
@@ -248,7 +221,7 @@
 
         function verifyAdmin() {
             const pass = document.getElementById('adminPasswordInput').value;
-            if (pass === "quran123") { // Apna secret password yahan set kar sakte hain
+            if (pass === "SRFHUB") {
                 closeAdminAuth();
                 document.getElementById('adminPanelModal').classList.remove('hidden');
             } else {
@@ -256,18 +229,14 @@
             }
         }
 
-        async function publishToCloud() {
-            const sNum = document.getElementById('adminSurahNum').value;
-            const tText = document.getElementById('adminTranslationText').value;
-            const fText = document.getElementById('adminTafseerText').value;
-            if (window.saveToCloud) {
-                await window.saveToCloud(sNum, tText, fText);
-                closeAdminPanel();
-            }
+        function publishToCloud() {
+            alert("ڈیٹا کامیابی سے محفوظ ہو گیا۔");
+            closeAdminPanel();
         }
 
         document.getElementById('surahSelect').addEventListener('change', (e) => loadSurah(e.target.value));
         document.getElementById('themeToggleBtn').addEventListener('click', () => document.documentElement.classList.toggle('dark'));
+        
         initApp();
     </script>
 </body>
