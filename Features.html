@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>القرآن الكريم - Advanced Features & Library</title>
     
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -21,7 +20,6 @@
         }
     </script>
 
-    <!-- Google Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Nastaliq+Urdu:wght@400..700&display=swap" rel="stylesheet">
@@ -33,26 +31,27 @@
         .urdu-text { font-family: 'Noto Nastaliq Urdu', serif; line-height: 2.3; }
         .btn-gold { background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%); color: #022c22; font-weight: bold; }
         .btn-emerald { background: linear-gradient(135deg, #059669 0%, #064e3b 100%); color: #fff; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #022c22; }
         ::-webkit-scrollbar-thumb { background: #059669; border-radius: 3px; }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-emerald-950 text-slate-800 dark:text-emerald-100 min-h-screen flex flex-col font-sans pb-16">
+<body class="bg-slate-50 dark:bg-emerald-950 text-slate-800 dark:text-emerald-100 min-h-screen flex flex-col font-sans pb-20">
 
     <!-- Top Header -->
     <header class="sticky top-0 z-40 bg-white/95 dark:bg-emerald-900/95 backdrop-blur-md border-b border-gold-500/30 shadow-lg py-3 px-6 flex justify-between items-center">
-        <h1 class="urdu-text text-lg font-bold text-gold-400">اسلامی ڈیجیٹل لائبریری</h1>
+        <h1 id="sectionTitle" class="urdu-text text-lg font-bold text-gold-400">القرآن الكريم</h1>
         <a href="index.html" class="px-4 py-2 rounded-xl btn-gold text-xs urdu-text shadow"><i class="fa-solid fa-house ml-1"></i> ہوم پیج</a>
     </header>
 
-    <main class="max-w-5xl w-full mx-auto p-4 sm:p-6 space-y-10">
+    <main class="max-w-5xl w-full mx-auto p-4 sm:p-6 space-y-6 flex-grow">
 
-        <!-- SECTION 1: QURAN READER (13 / 15 Lines & Jump Selectors) -->
-        <section id="quran" class="bg-white dark:bg-emerald-900/60 rounded-3xl p-6 shadow-2xl border border-emerald-800/40">
+        <!-- SECTION 1: QURAN READER -->
+        <section id="quranTab" class="tab-content bg-white dark:bg-emerald-900/60 rounded-3xl p-6 shadow-2xl border border-emerald-800/40">
             <h2 class="urdu-text text-xl font-bold text-gold-400 mb-4 border-b border-emerald-800 pb-2"><i class="fa-solid fa-book-quran ml-2"></i> قرآن پاک (مصحف موڈ)</h2>
             
-            <!-- Step 1: Format Selector (13 Line / 15 Line) -->
             <div id="formatSelectorBox" class="text-center py-10 space-y-6">
                 <p class="urdu-text text-sm text-emerald-200">براہ کرم قرآن مجید کا صفحاتی فارمیٹ منتخب کریں:</p>
                 <div class="flex justify-center gap-4">
@@ -61,29 +60,26 @@
                 </div>
             </div>
 
-            <!-- Step 2: Advanced Reader View (Hidden initially) -->
             <div id="quranReaderBox" class="hidden space-y-6">
-                <!-- Jump Navigation Bar -->
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-emerald-950/80 p-4 rounded-2xl border border-gold-500/30">
                     <div>
-                        <label class="block text-xs text-gold-400 urdu-text mb-1">پارہ منتخب کریں:</label>
+                        <label class="block text-xs text-gold-400 urdu-text mb-1">پارہ:</label>
                         <select id="jumpPara" onchange="jumpToPara(this.value)" class="w-full bg-emerald-900 text-xs text-white rounded-xl p-2 outline-none urdu-text border border-emerald-700"></select>
                     </div>
                     <div>
-                        <label class="block text-xs text-gold-400 urdu-text mb-1">سورۃ منتخب کریں:</label>
+                        <label class="block text-xs text-gold-400 urdu-text mb-1">سورۃ:</label>
                         <select id="jumpSurah" onchange="jumpToSurah(this.value)" class="w-full bg-emerald-900 text-xs text-white rounded-xl p-2 outline-none urdu-text border border-emerald-700"></select>
                     </div>
                     <div>
-                        <label class="block text-xs text-gold-400 urdu-text mb-1">رکوع نمبر:</label>
+                        <label class="block text-xs text-gold-400 urdu-text mb-1">رکوع:</label>
                         <select id="jumpRuku" class="w-full bg-emerald-900 text-xs text-white rounded-xl p-2 outline-none urdu-text border border-emerald-700"><option>رکوع 1</option></select>
                     </div>
                     <div>
-                        <label class="block text-xs text-gold-400 urdu-text mb-1">آیت نمبر:</label>
+                        <label class="block text-xs text-gold-400 urdu-text mb-1">آیت:</label>
                         <select id="jumpAyah" class="w-full bg-emerald-900 text-xs text-white rounded-xl p-2 outline-none urdu-text border border-emerald-700"><option>آیت 1</option></select>
                     </div>
                 </div>
 
-                <!-- Mushaf Dual/Single Page Display Box -->
                 <div class="bg-emerald-950/90 rounded-2xl p-6 sm:p-8 border-2 border-gold-500/40 text-center shadow-inner relative min-h-[350px] flex flex-col justify-between">
                     <div class="absolute top-3 left-4 text-xs text-gold-400 urdu-text" id="formatBadge">فارمیٹ: 15 سطر</div>
                     <div id="mushafContent" class="quran-text text-2xl sm:text-3xl text-emerald-100 py-6">
@@ -98,14 +94,13 @@
             </div>
         </section>
 
-        <!-- SECTION 2: CHAHAL HADITH (40 Hadith) -->
-        <section id="hadith" class="bg-white dark:bg-emerald-900/60 rounded-3xl p-6 shadow-2xl border border-emerald-800/40">
+        <!-- SECTION 2: HADITH -->
+        <section id="hadithTab" class="tab-content bg-white dark:bg-emerald-900/60 rounded-3xl p-6 shadow-2xl border border-emerald-800/40">
             <div class="flex justify-between items-center mb-4 border-b border-emerald-800 pb-2">
-                <h2 class="urdu-text text-xl font-bold text-gold-400"><i class="fa-solid fa-scroll ml-2"></i> چالیس احادیث مبارکہ (Chahal Hadith)</h2>
+                <h2 class="urdu-text text-xl font-bold text-gold-400"><i class="fa-solid fa-scroll ml-2"></i> چالیس احادیث مبارکہ</h2>
                 <button onclick="openAddHadithModal()" class="px-3 py-1.5 rounded-xl btn-gold text-xs urdu-text"><i class="fa-solid fa-plus ml-1"></i> نئی حدیث جوڑیں</button>
             </div>
             <div id="hadithContainer" class="space-y-4">
-                <!-- Hadith Item Example -->
                 <div class="bg-emerald-950/60 p-5 rounded-2xl border border-emerald-800/60">
                     <span class="text-xs text-gold-400 font-bold urdu-text">حديث نمبر ۱</span>
                     <p class="quran-text text-xl text-right text-emerald-100 my-2">إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ</p>
@@ -115,9 +110,9 @@
             </div>
         </section>
 
-        <!-- SECTION 3: CHAHAL RABBANA (40 Rabbana Duas) -->
-        <section id="rabbana" class="bg-white dark:bg-emerald-900/60 rounded-3xl p-6 shadow-2xl border border-emerald-800/40">
-            <h2 class="urdu-text text-xl font-bold text-gold-400 mb-4 border-b border-emerald-800 pb-2"><i class="fa-solid fa-hands-praying ml-2"></i> چالیس ربنا دعائیں (Chahal Rabbana)</h2>
+        <!-- SECTION 3: RABBANA -->
+        <section id="rabbanaTab" class="tab-content bg-white dark:bg-emerald-900/60 rounded-3xl p-6 shadow-2xl border border-emerald-800/40">
+            <h2 class="urdu-text text-xl font-bold text-gold-400 mb-4 border-b border-emerald-800 pb-2"><i class="fa-solid fa-hands-praying ml-2"></i> چالیس ربنا دعائیں</h2>
             <div id="rabbanaContainer" class="space-y-4">
                 <div class="bg-emerald-950/60 p-5 rounded-2xl border border-emerald-800/60">
                     <span class="text-xs text-gold-400 font-bold urdu-text">ربنا نمبر ۱ (سورۃ البقرہ: آیت ۲۰۱)</span>
@@ -127,18 +122,67 @@
             </div>
         </section>
 
-        <!-- SECTION 4: ABOUT US -->
-        <section id="about" class="bg-white dark:bg-emerald-900/60 rounded-3xl p-6 shadow-2xl border border-emerald-800/40 text-center space-y-4">
-            <h2 class="urdu-text text-xl font-bold text-gold-400 border-b border-emerald-800 pb-2"><i class="fa-solid fa-circle-info ml-2"></i> ہمارے بارے میں (About Us)</h2>
+        <!-- SECTION 4: ABOUT -->
+        <section id="aboutTab" class="tab-content bg-white dark:bg-emerald-900/60 rounded-3xl p-6 shadow-2xl border border-emerald-800/40 text-center space-y-4">
+            <h2 class="urdu-text text-xl font-bold text-gold-400 border-b border-emerald-800 pb-2"><i class="fa-solid fa-circle-info ml-2"></i> ہمارے بارے میں</h2>
             <p class="urdu-text text-sm text-emerald-200 leading-relaxed">
-                یہ پلیٹ فارم مسلمانوں کے لیے قرآن پاک کی تلاوت، مستند تراجم، تفاسیر ابن کثیر، چالیس احادیث اور دعاؤں کا ایک بہترین اور جدید ڈیجیٹل مجموعہ ہے۔ ہمارا مقصد اسلامی علم کو خوبصورت اور تیز رفتار پریمیم انٹرفیس کے ساتھ آپ تک پہنچانا ہے۔
+                یہ پلیٹ فارم مسلمانوں کے لیے قرآن پاک کی تلاوت، مستند تراجم، تفاسیر ابن کثیر، چالیس احادیث اور دعاؤں کا ایک بہترین اور جدید ڈیجیٹل مجموعہ ہے۔
             </p>
         </section>
 
     </main>
 
-    <!-- Script Logic -->
+    <!-- Sticky Footer -->
+    <style>
+        #customStickyFooter {
+            position: fixed !important; bottom: 0 !important; left: 0 !important; right: 0 !important;
+            z-index: 999999 !important; background: #022c22 !important; border-top: 2px solid #d97706 !important;
+            box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.5) !important; padding: 8px 10px !important;
+            font-family: 'Noto Nastaliq Urdu', serif !important;
+        }
+        .footer-nav-container { max-width: 700px; margin: 0 auto; display: flex; justify-content: space-around; align-items: center; }
+        .footer-nav-item { display: flex; flex-direction: column; align-items: center; color: #d1fae5 !important; text-decoration: none !important; font-size: 11px !important; padding: 4px 8px; border-radius: 12px; cursor: pointer; }
+        .footer-nav-item i { font-size: 18px !important; margin-bottom: 2px; color: #fbbf24 !important; }
+        .footer-nav-item:hover { color: #fbbf24 !important; background: rgba(217, 119, 6, 0.2); }
+    </style>
+    <div id="customStickyFooter">
+        <nav>
+            <div class="footer-nav-container">
+                <a href="Features.html#quran" onclick="switchTab('quran')" class="footer-nav-item"><i class="fa-solid fa-book-quran"></i><span>القرآن</span></a>
+                <a href="Features.html#hadith" onclick="switchTab('hadith')" class="footer-nav-item"><i class="fa-solid fa-scroll"></i><span>چالیس حدیث</span></a>
+                <a href="Features.html#rabbana" onclick="switchTab('rabbana')" class="footer-nav-item"><i class="fa-solid fa-hands-praying"></i><span>چالیس ربنا</span></a>
+                <a href="Features.html#about" onclick="switchTab('about')" class="footer-nav-item"><i class="fa-solid fa-circle-info"></i><span>تعارف</span></a>
+            </div>
+        </nav>
+    </div>
+
     <script>
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            if(tabName === 'quran') {
+                document.getElementById('quranTab').classList.add('active');
+                document.getElementById('sectionTitle').innerText = 'القرآن الكريم (مصحف موڈ)';
+            } else if(tabName === 'hadith') {
+                document.getElementById('hadithTab').classList.add('active');
+                document.getElementById('sectionTitle').innerText = 'چالیس احادیث مبارکہ';
+            } else if(tabName === 'rabbana') {
+                document.getElementById('rabbanaTab').classList.add('active');
+                document.getElementById('sectionTitle').innerText = 'چالیس ربنا دعائیں';
+            } else if(tabName === 'about') {
+                document.getElementById('aboutTab').classList.add('active');
+                document.getElementById('sectionTitle').innerText = 'تعارف (About Us)';
+            }
+        }
+
+        window.onload = function() {
+            const hash = window.location.hash.replace('#', '');
+            if(hash && ['quran', 'hadith', 'rabbana', 'about'].includes(hash)) {
+                switchTab(hash);
+            } else {
+                switchTab('quran');
+            }
+        }
+
         let currentFormat = 15;
         let currentPage = 1;
 
@@ -156,26 +200,15 @@
             for(let i=1; i<=30; i++) {
                 paraSelect.innerHTML += `<option value="${i}">پارہ ${i}</option>`;
             }
-            
             const surahSelect = document.getElementById('jumpSurah');
             surahSelect.innerHTML = `<option>سورۃ الفاتحہ</option><option>سورۃ البقرہ</option><option>سورۃ آل عمران</option>`;
         }
 
-        function nextPage() {
-            if(currentPage < 604) { currentPage++; updatePage(); }
-        }
-        function prevPage() {
-            if(currentPage > 1) { currentPage--; updatePage(); }
-        }
-        function updatePage() {
-            document.getElementById('pageIndicator').innerText = `صفحہ ${currentPage} از 604`;
-        }
-        function jumpToPara(val) {
-            alert(`پارہ ${val} پر منتقل ہو رہے ہیں...`);
-        }
-        function jumpToSurah(val) {
-            alert(`${val} پر منتقل ہو رہے ہیں...`);
-        }
+        function nextPage() { if(currentPage < 604) { currentPage++; updatePage(); } }
+        function prevPage() { if(currentPage > 1) { currentPage--; updatePage(); } }
+        function updatePage() { document.getElementById('pageIndicator').innerText = `صفحہ ${currentPage} از 604`; }
+        function jumpToPara(val) { alert(`پارہ ${val} par ja rahe hain...`); }
+        function jumpToSurah(val) { alert(`${val} par ja rahe hain...`); }
 
         function openAddHadithModal() {
             const hText = prompt("نئی حدیث کا عربی متن درج کریں:");
@@ -194,9 +227,6 @@
             }
         }
     </script>
-    
-    <!-- Auto-inject Floating Footer -->
-    <script src="footer.js"></script>
 </body>
-      </html>
-                      
+                        </html>
+                                                                                                                                                                   
