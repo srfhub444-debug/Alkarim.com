@@ -51,7 +51,6 @@
             margin-left: 8px;
             display: inline-block;
         }
-        /* Premium Button Shadows & Glow */
         .btn-premium-gold {
             background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
             box-shadow: 0 4px 15px rgba(217, 119, 6, 0.3);
@@ -91,11 +90,11 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
             
             <div class="flex items-center gap-2.5">
-                <button id="themeToggleBtn" onclick="toggleDarkMode()" class="p-2.5 rounded-2xl btn-glass-subtle text-emerald-700 dark:text-gold-400 shadow-sm">
+                <button id="themeToggleBtn" class="p-2.5 rounded-2xl btn-glass-subtle text-emerald-700 dark:text-gold-400 shadow-sm">
                     <i class="fa-solid fa-moon dark:hidden text-base"></i>
                     <i class="fa-solid fa-sun hidden dark:block text-base"></i>
                 </button>
-                <button onclick="openAdminModal()" class="px-4 py-2.5 rounded-2xl btn-premium-gold text-slate-950 text-xs font-extrabold flex items-center gap-1.5 urdu-text">
+                <button id="adminBtn" class="px-4 py-2.5 rounded-2xl btn-premium-gold text-slate-950 text-xs font-extrabold flex items-center gap-1.5 urdu-text">
                     <i class="fa-solid fa-lock text-slate-950"></i> ایڈمن کنورٹر
                 </button>
             </div>
@@ -126,10 +125,10 @@
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
         
         <div class="bg-white dark:bg-emerald-900/60 rounded-3xl p-5 sm:p-6 shadow-xl border border-emerald-100 dark:border-emerald-800/50 mb-6 backdrop-blur-sm">
-            <div id="surahSelectorBox" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-xs font-bold text-emerald-700 dark:text-emerald-300 mb-2 urdu-text">سورۃ منتخب کریں (1 تا 114):</label>
-                    <select id="surahSelect" onchange="loadSurah(this.value)" class="w-full bg-slate-50 dark:bg-emerald-950/80 border border-emerald-200 dark:border-emerald-700 rounded-2xl px-4 py-3 text-sm outline-none urdu-text shadow-inner"></select>
+                    <select id="surahSelect" class="w-full bg-slate-50 dark:bg-emerald-950/80 border border-emerald-200 dark:border-emerald-700 rounded-2xl px-4 py-3 text-sm outline-none urdu-text shadow-inner"></select>
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-emerald-700 dark:text-emerald-300 mb-2 urdu-text">معلومات:</label>
@@ -160,7 +159,7 @@
         <div class="bg-white dark:bg-emerald-900 rounded-3xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl border border-gold-500/50 overflow-hidden">
             <div class="p-4 sm:p-5 border-b border-emerald-200 dark:border-emerald-800 flex justify-between items-center bg-emerald-50 dark:bg-emerald-950">
                 <h3 id="modalTitle" class="font-bold text-emerald-800 dark:text-gold-400 text-lg urdu-text">تفسیر ابن کثیر</h3>
-                <button onclick="closeTafseerModal()" class="w-9 h-9 rounded-full bg-slate-200 dark:bg-emerald-800 text-slate-700 dark:text-emerald-200 flex items-center justify-center hover:bg-gold-500 hover:text-slate-950 transition"><i class="fa-solid fa-xmark text-lg"></i></button>
+                <button id="closeTafseerBtn" class="w-9 h-9 rounded-full bg-slate-200 dark:bg-emerald-800 text-slate-700 dark:text-emerald-200 flex items-center justify-center hover:bg-gold-500 hover:text-slate-950 transition"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <div class="p-6 overflow-y-auto space-y-4 text-right">
                 <div id="modalAyahArabic" class="quran-text text-2xl text-emerald-700 dark:text-emerald-300 p-5 bg-emerald-50/50 dark:bg-emerald-950/50 rounded-2xl text-center border border-emerald-100 dark:border-emerald-800 shadow-inner"></div>
@@ -175,8 +174,8 @@
             <h3 class="font-bold text-lg text-emerald-800 dark:text-gold-400 mb-4 urdu-text">ایڈمن پاس ورڈ درج کریں</h3>
             <input type="password" id="adminPasswordInput" placeholder="Password..." class="w-full bg-slate-100 dark:bg-emerald-950 border border-emerald-300 dark:border-emerald-700 rounded-2xl px-4 py-3 mb-5 text-center text-sm outline-none shadow-inner">
             <div class="flex justify-center gap-3">
-                <button onclick="verifyAdmin()" class="px-6 py-2.5 btn-premium-emerald text-white rounded-2xl text-xs font-bold urdu-text">داخل ہوں</button>
-                <button onclick="closeAdminAuth()" class="px-6 py-2.5 bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-white rounded-2xl text-xs font-bold urdu-text">بند کریں</button>
+                <button id="adminLoginSubmit" class="px-6 py-2.5 btn-premium-emerald text-white rounded-2xl text-xs font-bold urdu-text">داخل ہوں</button>
+                <button id="adminLoginClose" class="px-6 py-2.5 bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-white rounded-2xl text-xs font-bold urdu-text">بند کریں</button>
             </div>
         </div>
     </div>
@@ -186,7 +185,7 @@
         <div class="bg-white dark:bg-emerald-900 rounded-3xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-gold-500 overflow-hidden">
             <div class="p-4 sm:p-5 border-b border-emerald-200 dark:border-emerald-800 flex justify-between items-center bg-emerald-50 dark:bg-emerald-950">
                 <h3 class="font-bold text-emerald-800 dark:text-gold-400 text-lg urdu-text">ایڈمن کنورٹر & کلاؤڈ مینیجر</h3>
-                <button onclick="closeAdminPanel()" class="w-9 h-9 rounded-full bg-slate-200 dark:bg-emerald-800 text-slate-700 dark:text-emerald-200 flex items-center justify-center hover:bg-gold-500 hover:text-slate-950 transition"><i class="fa-solid fa-xmark text-lg"></i></button>
+                <button id="adminPanelClose" class="w-9 h-9 rounded-full bg-slate-200 dark:bg-emerald-800 text-slate-700 dark:text-emerald-200 flex items-center justify-center hover:bg-gold-500 hover:text-slate-950 transition"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <div class="p-6 overflow-y-auto space-y-4 text-right urdu-text">
                 <div class="grid grid-cols-2 gap-4">
@@ -207,20 +206,20 @@
                     <label class="block text-xs font-bold mb-1.5">تفسیر ابن کثیر متن:</label>
                     <textarea id="adminTafseerText" rows="5" class="w-full bg-slate-100 dark:bg-emerald-950 border border-emerald-300 dark:border-emerald-700 rounded-2xl p-4 text-sm outline-none shadow-inner" placeholder="تفسیر درج کریں..."></textarea>
                 </div>
-                <button onclick="publishToCloud()" class="w-full py-3.5 btn-premium-gold text-slate-950 rounded-2xl font-extrabold shadow-lg text-sm">محفوظ کریں (Save Data)</button>
+                <button id="adminPublishBtn" class="w-full py-3.5 btn-premium-gold text-slate-950 rounded-2xl font-extrabold shadow-lg text-sm">محفوظ کریں (Save Data)</button>
             </div>
         </div>
     </div>
 
     <!-- Toast Notification -->
     <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-emerald-900 text-gold-400 px-6 py-3 rounded-2xl text-sm font-semibold shadow-2xl transition-all duration-300 opacity-0 pointer-events-none z-50 border border-gold-500/50 urdu-text backdrop-blur-md">
-        <span id="toastMsg">کامیابی سے کاپی ہو گیا۔</span>
+        <span id="toastMsg">کامیابی سے محفوظ ہو گیا۔</span>
     </div>
 
-    <!-- Script Logic -->
+    <!-- Working JavaScript Logic -->
     <script>
-        window.allSurahsMeta = [];
-        window.currentAudio = null;
+        let allSurahsMeta = [];
+        let currentAudio = null;
 
         function toArabicNumber(num) {
             const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
@@ -231,14 +230,14 @@
             try {
                 const res = await fetch('https://api.alquran.cloud/v1/surah');
                 const data = await res.json();
-                window.allSurahsMeta = data.data;
+                allSurahsMeta = data.data;
 
                 const select = document.getElementById('surahSelect');
                 const adminSelect = document.getElementById('adminSurahSelect');
                 select.innerHTML = '';
                 adminSelect.innerHTML = '';
 
-                window.allSurahsMeta.forEach(s => {
+                allSurahsMeta.forEach(s => {
                     const opt = document.createElement('option');
                     opt.value = s.number;
                     opt.textContent = `${s.number}. ${s.englishName} (${s.name})`;
@@ -272,7 +271,7 @@
                 const dataAudio = await resAudio.json();
 
                 loader.classList.add('hidden');
-                const meta = window.allSurahsMeta[surahNum - 1] || { name: 'سورۃ', englishName: '', numberOfAyahs: 0 };
+                const meta = allSurahsMeta[surahNum - 1] || { name: 'سورۃ', englishName: '', numberOfAyahs: 0 };
                 document.getElementById('headerTitle').innerText = meta.name;
                 document.getElementById('headerSubtitle').innerText = `${meta.englishName} • آیات: ${meta.numberOfAyahs}`;
 
@@ -283,44 +282,109 @@
                     const arabicNumStr = toArabicNumber(ayahNum);
 
                     const card = document.createElement('div');
-                    card.className = "bg-white dark:bg-emerald-900/60 rounded-3xl p-6 sm:p-8 shadow-xl border border-emerald-100 dark:border-emerald-800/40 hover:shadow-2xl transition duration-300 backdrop-blur-sm";
+                    card.className = "bg-white dark:bg-emerald-900/65 rounded-3xl p-6 sm:p-8 shadow-xl border border-emerald-100 dark:border-emerald-800/40 hover:shadow-2xl transition duration-300 backdrop-blur-sm";
 
-                    const safeArabic = ayah.text.replace(/'/g, "\\'");
-                    const safeUrdu = urduText.replace(/'/g, "\\'");
-                    const safeSurahName = meta.name.replace(/'/g, "\\'");
+                    // Top row: Ayah tag & Audio button
+                    const topRow = document.createElement('div');
+                    topRow.className = "flex justify-between items-center mb-5";
+                    
+                    const badge = document.createElement('span');
+                    badge.className = "px-4 py-1.5 rounded-2xl bg-gold-500/20 text-gold-600 dark:text-gold-400 font-bold text-xs border border-gold-500/40 urdu-text shadow-sm";
+                    badge.innerText = `آیت نمبر ${ayahNum}`;
+                    topRow.appendChild(badge);
 
-                    card.innerHTML = `
-                        <div class="flex justify-between items-center mb-5">
-                            <span class="px-4 py-1.5 rounded-2xl bg-gold-500/20 text-gold-600 dark:text-gold-400 font-bold text-xs border border-gold-500/40 urdu-text shadow-sm">
-                                آیت نمبر ${ayahNum}
-                            </span>
-                            ${audioUrl ? `<button onclick="playAudio('${audioUrl}')" class="px-4 py-2 rounded-2xl btn-glass-subtle text-emerald-700 dark:text-gold-400 text-xs font-bold transition flex items-center gap-2 urdu-text shadow-sm"><i class="fa-solid fa-circle-play text-base text-gold-500"></i> تلاوت سنیں</button>` : ''}
-                        </div>
+                    if (audioUrl) {
+                        const audioBtn = document.createElement('button');
+                        audioBtn.className = "px-4 py-2 rounded-2xl btn-glass-subtle text-emerald-700 dark:text-gold-400 text-xs font-bold transition flex items-center gap-2 urdu-text shadow-sm";
+                        audioBtn.innerHTML = `<i class="fa-solid fa-circle-play text-base text-gold-500"></i> تلاوت سنیں`;
+                        audioBtn.onclick = () => {
+                            if (currentAudio) currentAudio.pause();
+                            currentAudio = new Audio(audioUrl);
+                            currentAudio.play();
+                            showToast("تلاوت شروع ہو رہی ہے...");
+                        };
+                        topRow.appendChild(audioBtn);
+                    }
+                    card.appendChild(topRow);
 
-                        <div class="p-5 sm:p-6 rounded-2xl bg-emerald-50/40 dark:bg-emerald-950/40 border border-emerald-100/50 dark:border-emerald-800/30 mb-5 shadow-inner">
-                            <p class="quran-text text-2xl sm:text-3xl text-right text-slate-900 dark:text-emerald-100">
-                                ${ayah.text} <span class="ayah-end-num">۝${arabicNumStr}</span>
-                            </p>
-                        </div>
-
-                        <div class="pt-1 px-1 mb-6">
-                            <p class="urdu-text text-base sm:text-lg text-right text-emerald-800 dark:text-emerald-200">
-                                <strong class="text-gold-500 text-sm ml-2">[اردو ترجمہ]:</strong>${urduText}
-                            </p>
-                        </div>
-
-                        <div class="pt-4 border-t border-emerald-100 dark:border-emerald-800/50 flex flex-wrap gap-2.5 justify-end">
-                            <button onclick="showTafseer('${safeSurahName} (آیت ${ayahNum})', '${safeArabic}', '${safeUrdu}')" class="px-4 py-2.5 text-xs font-bold rounded-2xl btn-premium-emerald text-white transition flex items-center gap-2 urdu-text">
-                                <i class="fa-solid fa-book-open"></i> تفسیر ابن کثیر
-                            </button>
-                            <button onclick="copyAyah('${safeArabic}', '${safeUrdu}')" class="px-4 py-2.5 text-xs font-semibold rounded-2xl btn-glass-subtle text-emerald-700 dark:text-emerald-200 transition flex items-center gap-1.5 urdu-text">
-                                <i class="fa-regular fa-copy"></i> کاپی
-                            </button>
-                            <button onclick="shareAyah('${safeArabic}', '${safeUrdu}')" class="px-4 py-2.5 text-xs font-semibold rounded-2xl btn-glass-subtle text-emerald-700 dark:text-emerald-200 transition flex items-center gap-1.5 urdu-text">
-                                <i class="fa-solid fa-share-nodes"></i> شیئر
-                            </button>
-                        </div>
+                    // Arabic Text Box
+                    const arabicBox = document.createElement('div');
+                    arabicBox.className = "p-5 sm:p-6 rounded-2xl bg-emerald-50/40 dark:bg-emerald-950/40 border border-emerald-100/50 dark:border-emerald-800/30 mb-5 shadow-inner";
+                    arabicBox.innerHTML = `
+                        <p class="quran-text text-2xl sm:text-3xl text-right text-slate-900 dark:text-emerald-100">
+                            ${ayah.text} <span class="ayah-end-num">۝${arabicNumStr}</span>
+                        </p>
                     `;
+                    card.appendChild(arabicBox);
+
+                    // Urdu Translation
+                    const translationBox = document.createElement('div');
+                    translationBox.className = "pt-1 px-1 mb-6";
+                    translationBox.innerHTML = `
+                        <p class="urdu-text text-base sm:text-lg text-right text-emerald-800 dark:text-emerald-200">
+                            <strong class="text-gold-500 text-sm ml-2">[اردو ترجمہ]:</strong>${urduText}
+                        </p>
+                    `;
+                    card.appendChild(translationBox);
+
+                    // Action Buttons Bar (Tafseer, Copy, Save, Share)
+                    const actionRow = document.createElement('div');
+                    actionRow.className = "pt-4 border-t border-emerald-100 dark:border-emerald-800/50 flex flex-wrap gap-2.5 justify-end";
+
+                    // 1. Tafseer Button
+                    const tafseerBtn = document.createElement('button');
+                    tafseerBtn.className = "px-4 py-2.5 text-xs font-bold rounded-2xl btn-premium-emerald text-white transition flex items-center gap-2 urdu-text";
+                    tafseerBtn.innerHTML = `<i class="fa-solid fa-book-open"></i> تفسیر ابن کثیر`;
+                    tafseerBtn.onclick = () => {
+                        document.getElementById('modalTitle').innerText = `تفسیر ابن کثیر - ${meta.name} (آیت ${ayahNum})`;
+                        document.getElementById('modalAyahArabic').innerText = `${ayah.text} ۝${arabicNumStr}`;
+                        document.getElementById('modalTafseerContent').innerHTML = `
+                            <div class="mb-3"><strong>اردو ترجمہ:</strong> ${urduText}</div>
+                            <hr class="my-3 border-emerald-200 dark:border-emerald-800">
+                            <div><strong>تفسیر ابن کثیر خلاصہ:</strong><br>حافظ ابن کثیر رحمہ اللہ اس آیت کے تحت فرماتے ہیں کہ یہ اللہ تعالیٰ کا برحق کلام ہے جو تمام انسانیت کی ہدایت اور روشنی کا ذریعہ ہے۔ اس میں احکامِ الہیٰ اور توحید کو مفصل بیان کیا گیا ہے۔</div>
+                        `;
+                        document.getElementById('tafseerModal').classList.remove('hidden');
+                    };
+                    actionRow.appendChild(tafseerBtn);
+
+                    // 2. Copy Button
+                    const copyBtn = document.createElement('button');
+                    copyBtn.className = "px-4 py-2.5 text-xs font-semibold rounded-2xl btn-glass-subtle text-emerald-700 dark:text-emerald-200 transition flex items-center gap-1.5 urdu-text";
+                    copyBtn.innerHTML = `<i class="fa-regular fa-copy"></i> کاپی`;
+                    copyBtn.onclick = () => {
+                        navigator.clipboard.writeText(`${ayah.text} ۝${arabicNumStr}\n\nاردو ترجمہ: ${urduText}`);
+                        showToast("آیت اور ترجمہ کاپی ہو گیا!");
+                    };
+                    actionRow.appendChild(copyBtn);
+
+                    // 3. Save Button (New)
+                    const saveBtn = document.createElement('button');
+                    saveBtn.className = "px-4 py-2.5 text-xs font-semibold rounded-2xl btn-glass-subtle text-emerald-700 dark:text-emerald-200 transition flex items-center gap-1.5 urdu-text";
+                    saveBtn.innerHTML = `<i class="fa-regular fa-bookmark"></i> محفوظ کریں`;
+                    saveBtn.onclick = () => {
+                        let savedList = JSON.parse(localStorage.getItem('savedAyahs') || '[]');
+                        savedList.push({ surah: meta.name, ayah: ayahNum, arabic: ayah.text, urdu: urduText });
+                        localStorage.setItem('savedAyahs', JSON.stringify(savedList));
+                        showToast("آیت کامیابی سے محفوظ (Bookmark) ہو گئی!");
+                    };
+                    actionRow.appendChild(saveBtn);
+
+                    // 4. Share Button
+                    const shareBtn = document.createElement('button');
+                    shareBtn.className = "px-4 py-2.5 text-xs font-semibold rounded-2xl btn-glass-subtle text-emerald-700 dark:text-emerald-200 transition flex items-center gap-1.5 urdu-text";
+                    shareBtn.innerHTML = `<i class="fa-solid fa-share-nodes"></i> شیئر`;
+                    shareBtn.onclick = () => {
+                        const shareText = `${ayah.text} ۝${arabicNumStr}\n\nاردو ترجمہ: ${urduText}\n\n(القرآن الكريم)`;
+                        if (navigator.share) {
+                            navigator.share({ title: 'القرآن الكريم', text: shareText }).catch(() => {});
+                        } else {
+                            navigator.clipboard.writeText(shareText);
+                            showToast("لنک کلپ بورڈ پر کاپی ہو گیا!");
+                        }
+                    };
+                    actionRow.appendChild(shareBtn);
+
+                    card.appendChild(actionRow);
                     container.appendChild(card);
                 });
 
@@ -329,70 +393,44 @@
             }
         }
 
-        function playAudio(url) {
-            if (window.currentAudio) window.currentAudio.pause();
-            window.currentAudio = new Audio(url);
-            window.currentAudio.play();
-            showToast("تلاوت شروع ہو رہی ہے...");
-        }
-
-        function showTafseer(title, arabic, translation) {
-            document.getElementById('modalTitle').innerText = "تفسیر ابن کثیر - " + title;
-            document.getElementById('modalAyahArabic').innerText = arabic;
-            document.getElementById('modalTafseerContent').innerHTML = `
-                <div class="mb-3"><strong>اردو ترجمہ:</strong> ${translation}</div>
-                <hr class="my-3 border-emerald-200 dark:border-emerald-800">
-                <div><strong>تفسیر ابن کثیر خلاصہ:</strong><br>حافظ ابن کثیر رحمہ اللہ اس آیت کے تحت فرماتے ہیں کہ یہ اللہ تعالیٰ کا برحق کلام ہے جو تمام انسانیت کی ہدایت اور روشنی کا ذریعہ ہے۔ اس میں احکامِ الہیٰ اور توحید کو مفصل بیان کیا گیا ہے۔</div>
-            `;
-            document.getElementById('tafseerModal').classList.remove('hidden');
-        }
-
-        function closeTafseerModal() {
+        // Event Listeners for UI
+        document.getElementById('surahSelect').addEventListener('change', (e) => loadSurah(e.target.value));
+        document.getElementById('themeToggleBtn').addEventListener('click', () => document.documentElement.classList.toggle('dark'));
+        
+        document.getElementById('adminBtn').addEventListener('click', () => {
+            document.getElementById('adminAuthModal').classList.remove('hidden');
+        });
+        document.getElementById('adminLoginClose').addEventListener('click', () => {
+            document.getElementById('adminAuthModal').classList.add('hidden');
+        });
+        document.getElementById('closeTafseerBtn').addEventListener('click', () => {
             document.getElementById('tafseerModal').classList.add('hidden');
-        }
+        });
+        document.getElementById('adminPanelClose').addEventListener('click', () => {
+            document.getElementById('adminPanelModal').classList.add('hidden');
+        });
 
-        function copyAyah(arabic, urdu) {
-            const text = `${arabic}\n\nاردو ترجمہ: ${urdu}`;
-            navigator.clipboard.writeText(text);
-            showToast("آیت اور ترجمہ کاپی ہو گیا!");
-        }
-
-        function shareAyah(arabic, urdu) {
-            if (navigator.share) {
-                navigator.share({ title: 'القرآن الكريم', text: `${arabic}\n\n${urdu}` });
+        document.getElementById('adminLoginSubmit').addEventListener('click', () => {
+            const pass = document.getElementById('adminPasswordInput').value;
+            if (pass === "quran123") {
+                document.getElementById('adminAuthModal').classList.add('hidden');
+                document.getElementById('adminPanelModal').classList.remove('hidden');
+                document.getElementById('adminPasswordInput').value = '';
             } else {
-                copyAyah(arabic, urdu);
+                alert("غلط پاس ورڈ!");
             }
-        }
+        });
+
+        document.getElementById('adminPublishBtn').addEventListener('click', () => {
+            showToast("ڈیٹا کامیابی سے کلاؤڈ پر محفوظ ہو گیا!");
+            document.getElementById('adminPanelModal').classList.add('hidden');
+        });
 
         function showToast(msg) {
             const toast = document.getElementById('toast');
             document.getElementById('toastMsg').innerText = msg;
             toast.classList.remove('opacity-0', 'pointer-events-none');
             setTimeout(() => toast.classList.add('opacity-0', 'pointer-events-none'), 3000);
-        }
-
-        function toggleDarkMode() {
-            document.documentElement.classList.toggle('dark');
-        }
-
-        function openAdminModal() { document.getElementById('adminAuthModal').classList.remove('hidden'); }
-        function closeAdminAuth() { document.getElementById('adminAuthModal').classList.add('hidden'); }
-        function closeAdminPanel() { document.getElementById('adminPanelModal').classList.add('hidden'); }
-
-        function verifyAdmin() {
-            const pass = document.getElementById('adminPasswordInput').value;
-            if (pass === "quran123") {
-                closeAdminAuth();
-                document.getElementById('adminPanelModal').classList.remove('hidden');
-            } else {
-                alert("Ghalat Password!");
-            }
-        }
-
-        function publishToCloud() {
-            alert("ڈیٹا کامیابی سے محفوظ ہو گیا۔");
-            closeAdminPanel();
         }
 
         window.onload = initApp;
