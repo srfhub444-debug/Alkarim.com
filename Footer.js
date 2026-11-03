@@ -1,19 +1,24 @@
 // Premium Floating Sticky Footer Navigation Component
 (function() {
-    const footerHTML = `
+    // Check if footer already exists to avoid duplicates
+    if (document.getElementById('customStickyFooter')) return;
+
+    const footerWrapper = document.createElement('div');
+    footerWrapper.id = 'customStickyFooter';
+    
+    footerWrapper.innerHTML = `
     <style>
-        .custom-sticky-footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: rgba(2, 44, 34, 0.95);
-            backdrop-filter: blur(12px);
-            border-top: 1px solid rgba(217, 119, 6, 0.3);
-            box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.4);
-            padding: 10px 15px;
-            font-family: 'Noto Nastaliq Urdu', serif;
+        #customStickyFooter {
+            position: fixed !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            z-index: 999999 !important;
+            background: #022c22 !important;
+            border-top: 2px solid #d97706 !important;
+            box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.5) !important;
+            padding: 8px 10px !important;
+            font-family: 'Noto Nastaliq Urdu', serif !important;
         }
         .footer-nav-container {
             max-width: 700px;
@@ -26,26 +31,26 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            color: #d1fae5;
-            text-decoration: none;
-            font-size: 11px;
+            color: #d1fae5 !important;
+            text-decoration: none !important;
+            font-size: 11px !important;
             transition: all 0.3s ease;
-            padding: 5px 10px;
-            border-radius: 16px;
+            padding: 4px 8px;
+            border-radius: 12px;
         }
         .footer-nav-item i {
-            font-size: 18px;
-            margin-bottom: 3px;
-            color: #fbbf24;
+            font-size: 18px !important;
+            margin-bottom: 2px;
+            color: #fbbf24 !important;
         }
-        .footer-nav-item:hover, .footer-nav-item.active {
-            color: #fbbf24;
-            background: rgba(217, 119, 6, 0.15);
+        .footer-nav-item:hover {
+            color: #fbbf24 !important;
+            background: rgba(217, 119, 6, 0.2);
             transform: translateY(-2px);
         }
     </style>
 
-    <nav class="custom-sticky-footer">
+    <nav>
         <div class="footer-nav-container">
             <a href="index.html" class="footer-nav-item">
                 <i class="fa-solid fa-house"></i>
@@ -71,11 +76,14 @@
     </nav>
     `;
 
-    document.addEventListener("DOMContentLoaded", function() {
-        const div = document.createElement('div');
-        div.innerHTML = footerHTML;
-        document.body.appendChild(div);
-        document.body.style.paddingBottom = "70px"; // Prevent content overlap with footer
-    });
+    if (document.body) {
+        document.body.appendChild(footerWrapper);
+        document.body.style.paddingBottom = "80px";
+    } else {
+        document.addEventListener("DOMContentLoaded", function() {
+            document.body.appendChild(footerWrapper);
+            document.body.style.paddingBottom = "80px";
+        });
+    }
 })();
-  
+            
