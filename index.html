@@ -199,14 +199,14 @@
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold mb-1.5">آیت کا اردو ترجمہ:</label>
-                    <textarea id="adminTranslationText" rows="3" class="w-full bg-slate-100 dark:bg-emerald-950 border border-emerald-300 dark:border-emerald-700 rounded-2xl p-4 text-sm outline-none shadow-inner" placeholder="آیت کا ترجمہ درج کریں..."></textarea>
+                    <label class="block text-xs font-bold mb-1.5">آیت کا اردو ترجمہ (اختیاری):</label>
+                    <textarea id="adminTranslationText" rows="3" class="w-full bg-slate-100 dark:bg-emerald-950 border border-emerald-300 dark:border-emerald-700 rounded-2xl p-4 text-sm outline-none shadow-inner" placeholder="Agar aap tarjuma badalna chahein..."></textarea>
                 </div>
                 <div>
                     <label class="block text-xs font-bold mb-1.5">تفسیر ابن کثیر متن:</label>
-                    <textarea id="adminTafseerText" rows="5" class="w-full bg-slate-100 dark:bg-emerald-950 border border-emerald-300 dark:border-emerald-700 rounded-2xl p-4 text-sm outline-none shadow-inner" placeholder="تفسیر درج کریں..."></textarea>
+                    <textarea id="adminTafseerText" rows="5" class="w-full bg-slate-100 dark:bg-emerald-950 border border-emerald-300 dark:border-emerald-700 rounded-2xl p-4 text-sm outline-none shadow-inner" placeholder="Yahan tafseer likhein ya paste karein..."></textarea>
                 </div>
-                <button id="adminPublishBtn" class="w-full py-3.5 btn-premium-gold text-slate-950 rounded-2xl font-extrabold shadow-lg text-sm">محفوظ کریں (Save Data)</button>
+                <button id="adminPublishBtn" class="w-full py-3.5 btn-premium-gold text-slate-950 rounded-2xl font-extrabold shadow-lg text-sm">محفوظ کریں (Save Custom Data)</button>
             </div>
         </div>
     </div>
@@ -216,7 +216,7 @@
         <span id="toastMsg">کامیابی سے محفوظ ہو گیا۔</span>
     </div>
 
-    <!-- Working JavaScript Logic -->
+    <!-- Working JavaScript Logic with Custom Storage -->
     <script>
         let allSurahsMeta = [];
         let currentAudio = null;
@@ -275,16 +275,25 @@
                 document.getElementById('headerTitle').innerText = meta.name;
                 document.getElementById('headerSubtitle').innerText = `${meta.englishName} • آیات: ${meta.numberOfAyahs}`;
 
+                // Load any custom stored data for this surah from localStorage
+                let customData = JSON.parse(localStorage.getItem(`surah_${surahNum}_data`) || '{}');
+
                 dataAr.data.ayahs.forEach((ayah, index) => {
-                    const urduText = dataUr.data && dataUr.data.ayahs[index] ? dataUr.data.ayahs[index].text : "ترجمہ دستیاب نہیں ہے۔";
-                    const audioUrl = dataAudio.data && dataAudio.data.ayahs[index] ? dataAudio.data.ayahs[index].audio : '';
                     const ayahNum = ayah.numberInSurah;
+                    let urduText = dataUr.data && dataUr.data.ayahs[index] ? dataUr.data.ayahs[index].text : "ترجمہ دستیاب نہیں ہے۔";
+                    
+                    // Check if custom translation exists in storage
+                    if (customData[ayahNum] && customData[ayahNum].translation) {
+                        urduText = customData[ayahNum].translation;
+                    }
+
+                    const audioUrl = dataAudio.data && dataAudio.data.ayahs[index] ? dataAudio.data.ayahs[index].audio : '';
                     const arabicNumStr = toArabicNumber(ayahNum);
 
                     const card = document.createElement('div');
                     card.className = "bg-white dark:bg-emerald-900/65 rounded-3xl p-6 sm:p-8 shadow-xl border border-emerald-100 dark:border-emerald-800/40 hover:shadow-2xl transition duration-300 backdrop-blur-sm";
 
-                    // Top row: Ayah tag & Audio button
+                    // Top row
                     const topRow = document.createElement('div');
                     topRow.className = "flex justify-between items-center mb-5";
                     
@@ -327,7 +336,7 @@
                     `;
                     card.appendChild(translationBox);
 
-                    // Action Buttons Bar (Tafseer, Copy, Save, Share)
+                    // Action Buttons Bar
                     const actionRow = document.createElement('div');
                     actionRow.className = "pt-4 border-t border-emerald-100 dark:border-emerald-800/50 flex flex-wrap gap-2.5 justify-end";
 
@@ -336,12 +345,14 @@
                     tafseerBtn.className = "px-4 py-2.5 text-xs font-bold rounded-2xl btn-premium-emerald text-white transition flex items-center gap-2 urdu-text";
                     tafseerBtn.innerHTML = `<i class="fa-solid fa-book-open"></i> تفسیر ابن کثیر`;
                     tafseerBtn.onclick = () => {
+                        let customTafseer = customData[ayahNum] && customData[ayahNum].tafseer ? customData[ayahNum].tafseer : `حافظ ابن کثیر رحمہ اللہ اس آیت کے تحت فرماتے ہیں کہ یہ اللہ تعالیٰ کا برحق کلام ہے جو تمام انسانیت کی ہدایت اور روشنی کا ذریعہ ہے۔ اس میں احکامِ الہیٰ اور توحید کو مفصل بیان کیا گیا ہے۔ (آپ اسے ایڈمن کنورٹر سے تبدیل کر سکتے ہیں)`;
+                        
                         document.getElementById('modalTitle').innerText = `تفسیر ابن کثیر - ${meta.name} (آیت ${ayahNum})`;
                         document.getElementById('modalAyahArabic').innerText = `${ayah.text} ۝${arabicNumStr}`;
                         document.getElementById('modalTafseerContent').innerHTML = `
                             <div class="mb-3"><strong>اردو ترجمہ:</strong> ${urduText}</div>
                             <hr class="my-3 border-emerald-200 dark:border-emerald-800">
-                            <div><strong>تفسیر ابن کثیر خلاصہ:</strong><br>حافظ ابن کثیر رحمہ اللہ اس آیت کے تحت فرماتے ہیں کہ یہ اللہ تعالیٰ کا برحق کلام ہے جو تمام انسانیت کی ہدایت اور روشنی کا ذریعہ ہے۔ اس میں احکامِ الہیٰ اور توحید کو مفصل بیان کیا گیا ہے۔</div>
+                            <div><strong>تفسیر ابن کثیر:</strong><br>${customTafseer}</div>
                         `;
                         document.getElementById('tafseerModal').classList.remove('hidden');
                     };
@@ -357,7 +368,7 @@
                     };
                     actionRow.appendChild(copyBtn);
 
-                    // 3. Save Button (New)
+                    // 3. Save / Bookmark Button
                     const saveBtn = document.createElement('button');
                     saveBtn.className = "px-4 py-2.5 text-xs font-semibold rounded-2xl btn-glass-subtle text-emerald-700 dark:text-emerald-200 transition flex items-center gap-1.5 urdu-text";
                     saveBtn.innerHTML = `<i class="fa-regular fa-bookmark"></i> محفوظ کریں`;
@@ -393,7 +404,7 @@
             }
         }
 
-        // Event Listeners for UI
+        // Event Listeners
         document.getElementById('surahSelect').addEventListener('change', (e) => loadSurah(e.target.value));
         document.getElementById('themeToggleBtn').addEventListener('click', () => document.documentElement.classList.toggle('dark'));
         
@@ -421,9 +432,30 @@
             }
         });
 
+        // Save Custom Data to LocalStorage from Admin Panel
         document.getElementById('adminPublishBtn').addEventListener('click', () => {
-            showToast("ڈیٹا کامیابی سے کلاؤڈ پر محفوظ ہو گیا!");
+            const sNum = document.getElementById('adminSurahSelect').value;
+            const aNum = document.getElementById('adminAyahNum').value;
+            const trans = document.getElementById('adminTranslationText').value.trim();
+            const tafs = document.getElementById('adminTafseerText').value.trim();
+
+            let storageKey = `surah_${sNum}_data`;
+            let surahData = JSON.parse(localStorage.getItem(storageKey) || '{}');
+
+            if (!surahData[aNum]) surahData[aNum] = {};
+            if (trans) surahData[aNum].translation = trans;
+            if (tafs) surahData[aNum].tafseer = tafs;
+
+            localStorage.setItem(storageKey, JSON.stringify(surahData));
+
+            showToast("ڈیٹا کامیابی سے محفوظ ہو گیا!");
             document.getElementById('adminPanelModal').classList.add('hidden');
+            
+            // Reload current surah if same surah is open
+            const currentSurah = document.getElementById('surahSelect').value;
+            if (currentSurah === sNum) {
+                loadSurah(sNum);
+            }
         });
 
         function showToast(msg) {
