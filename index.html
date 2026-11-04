@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>القرآن الكريم - Premium Mushaf & Tafseer Portal</title>
     
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -21,84 +20,36 @@
         }
     </script>
 
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Nastaliq+Urdu:wght@400..700&display=swap" rel="stylesheet">
-    
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        .quran-heading { 
-            font-family: 'Amiri Quran', 'Amiri', serif !important; 
-            line-height: 1.6 !important;
-            display: inline-block;
-        }
-        .quran-text { 
-            font-family: 'Amiri Quran', 'Amiri', serif !important; 
-            line-height: 2.8 !important; 
-        }
-        .urdu-text { 
-            font-family: 'Noto Nastaliq Urdu', serif !important; 
-            line-height: 2.3 !important; 
-        }
-        .ayah-end-num {
-            font-family: 'Amiri Quran', serif;
-            color: #d97706;
-            font-size: 1.25em;
-            margin-right: 8px;
-            margin-left: 8px;
-            display: inline-block;
-        }
-        .btn-premium-gold {
-            background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
-            box-shadow: 0 4px 15px rgba(217, 119, 6, 0.3);
-            transition: all 0.3s ease;
-        }
-        .btn-premium-gold:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(217, 119, 6, 0.5);
-        }
-        .btn-premium-emerald {
-            background: linear-gradient(135deg, #059669 0%, #064e3b 100%);
-            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
-            transition: all 0.3s ease;
-        }
-        .btn-premium-emerald:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.5);
-        }
-        .btn-glass-subtle {
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.2);
-            transition: all 0.3s ease;
-        }
-        .btn-glass-subtle:hover {
-            background: rgba(16, 185, 129, 0.2);
-            transform: translateY(-1px);
-        }
+        .quran-heading { font-family: 'Amiri Quran', 'Amiri', serif !important; line-height: 1.6 !important; display: inline-block; }
+        .quran-text { font-family: 'Amiri Quran', 'Amiri', serif !important; line-height: 2.8 !important; }
+        .urdu-text { font-family: 'Noto Nastaliq Urdu', serif !important; line-height: 2.3 !important; }
+        .ayah-end-num { font-family: 'Amiri Quran', serif; color: #d97706; font-size: 1.25em; margin-right: 8px; margin-left: 8px; display: inline-block; }
+        .btn-premium-gold { background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%); box-shadow: 0 4px 15px rgba(217, 119, 6, 0.3); transition: all 0.3s ease; }
+        .btn-premium-gold:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(217, 119, 6, 0.5); }
+        .btn-premium-emerald { background: linear-gradient(135deg, #059669 0%, #064e3b 100%); box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3); transition: all 0.3s ease; }
+        .btn-premium-emerald:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(5, 150, 105, 0.5); }
+        .btn-glass-subtle { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); transition: all 0.3s ease; }
+        .btn-glass-subtle:hover { background: rgba(16, 185, 129, 0.2); transform: translateY(-1px); }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #022c22; }
         ::-webkit-scrollbar-thumb { background: #059669; border-radius: 4px; }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-emerald-950 text-slate-800 dark:text-emerald-100 min-h-screen transition-colors duration-300 flex flex-col font-sans">
+<body class="bg-slate-50 dark:bg-emerald-950 text-slate-800 dark:text-emerald-100 min-h-screen transition-colors duration-300 flex flex-col font-sans pb-24">
 
     <!-- Header -->
     <header class="sticky top-0 z-40 bg-white/95 dark:bg-emerald-900/95 backdrop-blur-md border-b-2 border-gold-500/30 shadow-2xl py-3.5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-            
             <div class="flex items-center gap-2.5">
-                <button id="themeToggleBtn" class="p-2.5 rounded-2xl btn-glass-subtle text-emerald-700 dark:text-gold-400 shadow-sm">
-                    <i class="fa-solid fa-moon dark:hidden text-base"></i>
-                    <i class="fa-solid fa-sun hidden dark:block text-base"></i>
-                </button>
-                <button id="adminBtn" class="px-4 py-2.5 rounded-2xl btn-premium-gold text-slate-950 text-xs font-extrabold flex items-center gap-1.5 urdu-text">
-                    <i class="fa-solid fa-lock text-slate-950"></i> ایڈمن کنورٹر
-                </button>
+                <button id="themeToggleBtn" class="p-2.5 rounded-2xl btn-glass-subtle text-emerald-700 dark:text-gold-400 shadow-sm"><i class="fa-solid fa-moon dark:hidden text-base"></i><i class="fa-solid fa-sun hidden dark:block text-base"></i></button>
+                <button id="adminBtn" class="px-4 py-2.5 rounded-2xl btn-premium-gold text-slate-950 text-xs font-extrabold flex items-center gap-1.5 urdu-text"><i class="fa-solid fa-lock text-slate-950"></i> ایڈمن کنورٹر</button>
             </div>
-
             <div class="text-center flex flex-col items-center py-0.5">
                 <div class="flex items-center gap-2 mb-1.5">
                     <span class="text-gold-500 text-lg">۝</span>
@@ -107,23 +58,14 @@
                     <i class="fa-solid fa-mosque text-gold-500 text-lg"></i>
                     <span class="text-gold-500 text-lg">۝</span>
                 </div>
-                <p class="text-xs text-emerald-700 dark:text-emerald-300 urdu-text font-semibold tracking-wide">
-                    ترجمہ مفتی تقی عثمانی & تفسیر ابن کثیر
-                </p>
+                <p class="text-xs text-emerald-700 dark:text-emerald-300 urdu-text font-semibold tracking-wide">ترجمہ مفتی تقی عثمانی & تفسیر ابن کثیر</p>
             </div>
-
-            <div class="flex items-center">
-                <div class="w-11 h-11 rounded-2xl btn-premium-gold flex items-center justify-center text-slate-950 shadow-lg border border-gold-400/50">
-                    <i class="fa-solid fa-book-quran text-xl"></i>
-                </div>
-            </div>
-
+            <div class="w-11 h-11 rounded-2xl btn-premium-gold flex items-center justify-center text-slate-950 shadow-lg border border-gold-400/50"><i class="fa-solid fa-book-quran text-xl"></i></div>
         </div>
     </header>
 
     <!-- Main Content -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        
         <div class="bg-white dark:bg-emerald-900/60 rounded-3xl p-5 sm:p-6 shadow-xl border border-emerald-100 dark:border-emerald-800/50 mb-6 backdrop-blur-sm">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
@@ -151,7 +93,6 @@
         </div>
 
         <div id="ayahContainer" class="space-y-6"></div>
-
     </main>
 
     <!-- Tafseer Modal -->
@@ -199,24 +140,49 @@
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold mb-1.5">آیت کا اردو ترجمہ (اختیاری):</label>
-                    <textarea id="adminTranslationText" rows="3" class="w-full bg-slate-100 dark:bg-emerald-950 border border-emerald-300 dark:border-emerald-700 rounded-2xl p-4 text-sm outline-none shadow-inner" placeholder="Agar aap tarjuma badalna chahein..."></textarea>
+                    <label class="block text-xs font-bold mb-1.5">آیت کا اردو ترجمہ:</label>
+                    <textarea id="adminTranslationText" rows="3" class="w-full bg-slate-100 dark:bg-emerald-950 border border-emerald-300 dark:border-emerald-700 rounded-2xl p-4 text-sm outline-none shadow-inner" placeholder="Yahan tarjuma likhein..."></textarea>
                 </div>
                 <div>
                     <label class="block text-xs font-bold mb-1.5">تفسیر ابن کثیر متن:</label>
-                    <textarea id="adminTafseerText" rows="5" class="w-full bg-slate-100 dark:bg-emerald-950 border border-emerald-300 dark:border-emerald-700 rounded-2xl p-4 text-sm outline-none shadow-inner" placeholder="Yahan tafseer likhein ya paste karein..."></textarea>
+                    <textarea id="adminTafseerText" rows="5" class="w-full bg-slate-100 dark:bg-emerald-950 border border-emerald-300 dark:border-emerald-700 rounded-2xl p-4 text-sm outline-none shadow-inner" placeholder="Yahan tafseer likhein..."></textarea>
                 </div>
                 <button id="adminPublishBtn" class="w-full py-3.5 btn-premium-gold text-slate-950 rounded-2xl font-extrabold shadow-lg text-sm">محفوظ کریں (Save Custom Data)</button>
             </div>
         </div>
     </div>
 
+    <!-- Direct Sticky Footer -->
+    <style>
+        #customStickyFooter {
+            position: fixed !important; bottom: 0 !important; left: 0 !important; right: 0 !important;
+            z-index: 999999 !important; background: #022c22 !important; border-top: 2px solid #d97706 !important;
+            box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.5) !important; padding: 8px 10px !important;
+            font-family: 'Noto Nastaliq Urdu', serif !important;
+        }
+        .footer-nav-container { max-width: 700px; margin: 0 auto; display: flex; justify-content: space-around; align-items: center; }
+        .footer-nav-item { display: flex; flex-direction: column; align-items: center; color: #d1fae5 !important; text-decoration: none !important; font-size: 11px !important; padding: 4px 8px; border-radius: 12px; cursor: pointer; }
+        .footer-nav-item i { font-size: 18px !important; margin-bottom: 2px; color: #fbbf24 !important; }
+        .footer-nav-item:hover { color: #fbbf24 !important; background: rgba(217, 119, 6, 0.2); }
+    </style>
+    <div id="customStickyFooter">
+        <nav>
+            <div class="footer-nav-container">
+                <a href="index.html" class="footer-nav-item"><i class="fa-solid fa-house"></i><span>ہوم</span></a>
+                <a href="Features.html#quran" class="footer-nav-item"><i class="fa-solid fa-book-quran"></i><span>القرآن</span></a>
+                <a href="Features.html#hadith" class="footer-nav-item"><i class="fa-solid fa-scroll"></i><span>چالیس حدیث</span></a>
+                <a href="Features.html#rabbana" class="footer-nav-item"><i class="fa-solid fa-hands-praying"></i><span>چالیس ربنا</span></a>
+                <a href="Features.html#about" class="footer-nav-item"><i class="fa-solid fa-circle-info"></i><span>تعارف</span></a>
+            </div>
+        </nav>
+    </div>
+
     <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-emerald-900 text-gold-400 px-6 py-3 rounded-2xl text-sm font-semibold shadow-2xl transition-all duration-300 opacity-0 pointer-events-none z-50 border border-gold-500/50 urdu-text backdrop-blur-md">
+    <div id="toast" class="fixed bottom-16 left-1/2 -translate-x-1/2 bg-emerald-900 text-gold-400 px-6 py-3 rounded-2xl text-sm font-semibold shadow-2xl transition-all duration-300 opacity-0 pointer-events-none z-50 border border-gold-500/50 urdu-text backdrop-blur-md">
         <span id="toastMsg">کامیابی سے محفوظ ہو گیا۔</span>
     </div>
 
-    <!-- Working JavaScript Logic with Custom Storage -->
+    <!-- Script Logic -->
     <script>
         let allSurahsMeta = [];
         let currentAudio = null;
@@ -275,14 +241,12 @@
                 document.getElementById('headerTitle').innerText = meta.name;
                 document.getElementById('headerSubtitle').innerText = `${meta.englishName} • آیات: ${meta.numberOfAyahs}`;
 
-                // Load any custom stored data for this surah from localStorage
                 let customData = JSON.parse(localStorage.getItem(`surah_${surahNum}_data`) || '{}');
 
                 dataAr.data.ayahs.forEach((ayah, index) => {
                     const ayahNum = ayah.numberInSurah;
                     let urduText = dataUr.data && dataUr.data.ayahs[index] ? dataUr.data.ayahs[index].text : "ترجمہ دستیاب نہیں ہے۔";
                     
-                    // Check if custom translation exists in storage
                     if (customData[ayahNum] && customData[ayahNum].translation) {
                         urduText = customData[ayahNum].translation;
                     }
@@ -293,7 +257,6 @@
                     const card = document.createElement('div');
                     card.className = "bg-white dark:bg-emerald-900/65 rounded-3xl p-6 sm:p-8 shadow-xl border border-emerald-100 dark:border-emerald-800/40 hover:shadow-2xl transition duration-300 backdrop-blur-sm";
 
-                    // Top row
                     const topRow = document.createElement('div');
                     topRow.className = "flex justify-between items-center mb-5";
                     
@@ -316,7 +279,6 @@
                     }
                     card.appendChild(topRow);
 
-                    // Arabic Text Box
                     const arabicBox = document.createElement('div');
                     arabicBox.className = "p-5 sm:p-6 rounded-2xl bg-emerald-50/40 dark:bg-emerald-950/40 border border-emerald-100/50 dark:border-emerald-800/30 mb-5 shadow-inner";
                     arabicBox.innerHTML = `
@@ -326,7 +288,6 @@
                     `;
                     card.appendChild(arabicBox);
 
-                    // Urdu Translation
                     const translationBox = document.createElement('div');
                     translationBox.className = "pt-1 px-1 mb-6";
                     translationBox.innerHTML = `
@@ -336,16 +297,15 @@
                     `;
                     card.appendChild(translationBox);
 
-                    // Action Buttons Bar
                     const actionRow = document.createElement('div');
                     actionRow.className = "pt-4 border-t border-emerald-100 dark:border-emerald-800/50 flex flex-wrap gap-2.5 justify-end";
 
-                    // 1. Tafseer Button
+                    // Tafseer Button with Custom Storage Integration
                     const tafseerBtn = document.createElement('button');
                     tafseerBtn.className = "px-4 py-2.5 text-xs font-bold rounded-2xl btn-premium-emerald text-white transition flex items-center gap-2 urdu-text";
                     tafseerBtn.innerHTML = `<i class="fa-solid fa-book-open"></i> تفسیر ابن کثیر`;
                     tafseerBtn.onclick = () => {
-                        let customTafseer = customData[ayahNum] && customData[ayahNum].tafseer ? customData[ayahNum].tafseer : `حافظ ابن کثیر رحمہ اللہ اس آیت کے تحت فرماتے ہیں کہ یہ اللہ تعالیٰ کا برحق کلام ہے جو تمام انسانیت کی ہدایت اور روشنی کا ذریعہ ہے۔ اس میں احکامِ الہیٰ اور توحید کو مفصل بیان کیا گیا ہے۔ (آپ اسے ایڈمن کنورٹر سے تبدیل کر سکتے ہیں)`;
+                        let customTafseer = customData[ayahNum] && customData[ayahNum].tafseer ? customData[ayahNum].tafseer : `اس آیت مبارکہ کی تفسیر فی الحال ایڈمن کنورٹر سے درج نہیں کی گئی۔`;
                         
                         document.getElementById('modalTitle').innerText = `تفسیر ابن کثیر - ${meta.name} (آیت ${ayahNum})`;
                         document.getElementById('modalAyahArabic').innerText = `${ayah.text} ۝${arabicNumStr}`;
@@ -358,7 +318,6 @@
                     };
                     actionRow.appendChild(tafseerBtn);
 
-                    // 2. Copy Button
                     const copyBtn = document.createElement('button');
                     copyBtn.className = "px-4 py-2.5 text-xs font-semibold rounded-2xl btn-glass-subtle text-emerald-700 dark:text-emerald-200 transition flex items-center gap-1.5 urdu-text";
                     copyBtn.innerHTML = `<i class="fa-regular fa-copy"></i> کاپی`;
@@ -368,7 +327,6 @@
                     };
                     actionRow.appendChild(copyBtn);
 
-                    // 3. Save / Bookmark Button
                     const saveBtn = document.createElement('button');
                     saveBtn.className = "px-4 py-2.5 text-xs font-semibold rounded-2xl btn-glass-subtle text-emerald-700 dark:text-emerald-200 transition flex items-center gap-1.5 urdu-text";
                     saveBtn.innerHTML = `<i class="fa-regular fa-bookmark"></i> محفوظ کریں`;
@@ -380,7 +338,6 @@
                     };
                     actionRow.appendChild(saveBtn);
 
-                    // 4. Share Button
                     const shareBtn = document.createElement('button');
                     shareBtn.className = "px-4 py-2.5 text-xs font-semibold rounded-2xl btn-glass-subtle text-emerald-700 dark:text-emerald-200 transition flex items-center gap-1.5 urdu-text";
                     shareBtn.innerHTML = `<i class="fa-solid fa-share-nodes"></i> شیئر`;
@@ -404,7 +361,6 @@
             }
         }
 
-        // Event Listeners
         document.getElementById('surahSelect').addEventListener('change', (e) => loadSurah(e.target.value));
         document.getElementById('themeToggleBtn').addEventListener('click', () => document.documentElement.classList.toggle('dark'));
         
@@ -432,7 +388,6 @@
             }
         });
 
-        // Save Custom Data to LocalStorage from Admin Panel
         document.getElementById('adminPublishBtn').addEventListener('click', () => {
             const sNum = document.getElementById('adminSurahSelect').value;
             const aNum = document.getElementById('adminAyahNum').value;
@@ -451,7 +406,6 @@
             showToast("ڈیٹا کامیابی سے محفوظ ہو گیا!");
             document.getElementById('adminPanelModal').classList.add('hidden');
             
-            // Reload current surah if same surah is open
             const currentSurah = document.getElementById('surahSelect').value;
             if (currentSurah === sNum) {
                 loadSurah(sNum);
@@ -467,74 +421,5 @@
 
         window.onload = initApp;
     </script>
-            <!-- Direct Sticky Footer -->
-    <style>
-        #customStickyFooter {
-            position: fixed !important;
-            bottom: 0 !important;
-            left: 0 !important;
-            right: 0 !important;
-            z-index: 999999 !important;
-            background: #022c22 !important;
-            border-top: 2px solid #d97706 !important;
-            box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.5) !important;
-            padding: 8px 10px !important;
-            font-family: 'Noto Nastaliq Urdu', serif !important;
-        }
-        .footer-nav-container {
-            max-width: 700px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-        }
-        .footer-nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #d1fae5 !important;
-            text-decoration: none !important;
-            font-size: 11px !important;
-            transition: all 0.3s ease;
-            padding: 4px 8px;
-            border-radius: 12px;
-        }
-        .footer-nav-item i {
-            font-size: 18px !important;
-            margin-bottom: 2px;
-            color: #fbbf24 !important;
-        }
-        .footer-nav-item:hover {
-            color: #fbbf24 !important;
-            background: rgba(217, 119, 6, 0.2);
-            transform: translateY(-2px);
-        }
-    </style>
-    <div id="customStickyFooter">
-        <nav>
-            <div class="footer-nav-container">
-                <a href="index.html" class="footer-nav-item">
-                    <i class="fa-solid fa-house"></i>
-                    <span>ہوم</span>
-                </a>
-                <a href="Features.html#quran" class="footer-nav-item">
-                    <i class="fa-solid fa-book-quran"></i>
-                    <span>القرآن</span>
-                </a>
-                <a href="Features.html#hadith" class="footer-nav-item">
-                    <i class="fa-solid fa-scroll"></i>
-                    <span>چالیس حدیث</span>
-                </a>
-                <a href="Features.html#rabbana" class="footer-nav-item">
-                    <i class="fa-solid fa-hands-praying"></i>
-                    <span>چالیس ربنا</span>
-                </a>
-                <a href="Features.html#about" class="footer-nav-item">
-                    <i class="fa-solid fa-circle-info"></i>
-                    <span>تعارف</span>
-                </a>
-            </div>
-        </nav>
-    </div>
 </body>
 </html>
