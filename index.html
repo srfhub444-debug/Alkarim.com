@@ -140,14 +140,24 @@
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold mb-1.5">آیت کا اردو ترجمہ:</label>
-                    <textarea id="adminTranslationText" rows="3" class="w-full bg-slate-100 dark:bg-emerald-950 border border-emerald-300 dark:border-emerald-700 rounded-2xl p-4 text-sm outline-none shadow-inner" placeholder="Yahan tarjuma likhein..."></textarea>
+                    <label class="block text-xs font-bold mb-1.5">آیت کا اردو ترجمہ (Single Ayah):</label>
+                    <textarea id="adminTranslationText" rows="2" class="w-full bg-slate-100 dark:bg-emerald-950 border border-emerald-300 dark:border-emerald-700 rounded-2xl p-3 text-sm outline-none shadow-inner" placeholder="Yahan tarjuma likhein..."></textarea>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold mb-1.5">تفسیر ابن کثیر متن:</label>
-                    <textarea id="adminTafseerText" rows="5" class="w-full bg-slate-100 dark:bg-emerald-950 border border-emerald-300 dark:border-emerald-700 rounded-2xl p-4 text-sm outline-none shadow-inner" placeholder="Yahan tafseer likhein..."></textarea>
+                    <label class="block text-xs font-bold mb-1.5">تفسیر ابن کثیر متن (Single Ayah):</label>
+                    <textarea id="adminTafseerText" rows="3" class="w-full bg-slate-100 dark:bg-emerald-950 border border-emerald-300 dark:border-emerald-700 rounded-2xl p-3 text-sm outline-none shadow-inner" placeholder="Yahan tafseer likhein..."></textarea>
                 </div>
-                <button id="adminPublishBtn" class="w-full py-3.5 btn-premium-gold text-slate-950 rounded-2xl font-extrabold shadow-lg text-sm">محفوظ کریں (Save Custom Data)</button>
+                <button id="adminPublishBtn" class="w-full py-3 btn-premium-gold text-slate-950 rounded-2xl font-extrabold shadow-lg text-xs">محفوظ کریں (Single Ayah Save)</button>
+
+                <!-- Bulk JSON Upload Box -->
+                <div class="mt-6 pt-4 border-t border-emerald-300 dark:border-emerald-800">
+                    <label class="block text-xs font-bold mb-1.5 text-gold-400">پوری سورۃ کا ڈیٹا ایک ساتھ اپلوڈ کریں (Bulk JSON Import):</label>
+                    <textarea id="adminBulkJsonInput" rows="6" class="w-full bg-slate-100 dark:bg-emerald-950 border border-emerald-300 dark:border-emerald-700 rounded-2xl p-3 text-xs outline-none dir-ltr font-mono" placeholder='{
+  "1": { "translation": "شروع اللہ کے نام سے...", "tafseer": "تفسیر..." },
+  "2": { "translation": "سب تعریفیں اللہ کے لیے...", "tafseer": "تفسیر..." }
+}'></textarea>
+                    <button id="adminBulkSaveBtn" class="w-full mt-2 py-3 btn-premium-emerald text-white rounded-2xl font-bold text-xs shadow-lg">پوری سورۃ کا ڈیٹا یکمشت محفوظ کریں (Bulk Save Entire Surah)</button>
+                </div>
             </div>
         </div>
     </div>
@@ -300,7 +310,7 @@
                     const actionRow = document.createElement('div');
                     actionRow.className = "pt-4 border-t border-emerald-100 dark:border-emerald-800/50 flex flex-wrap gap-2.5 justify-end";
 
-                    // Tafseer Button with Custom Storage Integration
+                    // Tafseer Button Logic
                     const tafseerBtn = document.createElement('button');
                     tafseerBtn.className = "px-4 py-2.5 text-xs font-bold rounded-2xl btn-premium-emerald text-white transition flex items-center gap-2 urdu-text";
                     tafseerBtn.innerHTML = `<i class="fa-solid fa-book-open"></i> تفسیر ابن کثیر`;
@@ -379,7 +389,7 @@
 
         document.getElementById('adminLoginSubmit').addEventListener('click', () => {
             const pass = document.getElementById('adminPasswordInput').value;
-            if (pass === "12") {
+            if (pass === "quran123") {
                 document.getElementById('adminAuthModal').classList.add('hidden');
                 document.getElementById('adminPanelModal').classList.remove('hidden');
                 document.getElementById('adminPasswordInput').value = '';
@@ -388,6 +398,7 @@
             }
         });
 
+        // Single Ayah Publish Listener
         document.getElementById('adminPublishBtn').addEventListener('click', () => {
             const sNum = document.getElementById('adminSurahSelect').value;
             const aNum = document.getElementById('adminAyahNum').value;
@@ -403,12 +414,43 @@
 
             localStorage.setItem(storageKey, JSON.stringify(surahData));
 
-            showToast("ڈیٹا کامیابی سے محفوظ ہو گیا!");
+            showToast("آیت کا ڈیٹا کامیابی سے محفوظ ہو گیا!");
             document.getElementById('adminPanelModal').classList.add('hidden');
             
-            const currentSurah = document.getElementById('surahSelect').value;
-            if (currentSurah === sNum) {
+            if (document.getElementById('surahSelect').value === sNum) {
                 loadSurah(sNum);
+            }
+        });
+
+        // Bulk JSON Save Listener
+        document.getElementById('adminBulkSaveBtn').addEventListener('click', () => {
+            const sNum = document.getElementById('adminSurahSelect').value;
+            const rawJson = document.getElementById('adminBulkJsonInput').value.trim();
+
+            if (!rawJson) {
+                alert("Pehle JSON data enter karein!");
+                return;
+            }
+
+            try {
+                const parsedData = JSON.parse(rawJson);
+                let storageKey = `surah_${sNum}_data`;
+                
+                // Existing data ke sath merge karke store karna
+                let existingData = JSON.parse(localStorage.getItem(storageKey) || '{}');
+                let mergedData = { ...existingData, ...parsedData };
+
+                localStorage.setItem(storageKey, JSON.stringify(mergedData));
+
+                showToast(`سورۃ #${sNum} کا مکمل ڈیٹا کامیابی سے محفوظ ہو گیا!`);
+                document.getElementById('adminPanelModal').classList.add('hidden');
+                document.getElementById('adminBulkJsonInput').value = '';
+
+                if (document.getElementById('surahSelect').value === sNum) {
+                    loadSurah(sNum);
+                }
+            } catch (err) {
+                alert("JSON Format mein galti hai! Kripya format check karein.");
             }
         });
 
